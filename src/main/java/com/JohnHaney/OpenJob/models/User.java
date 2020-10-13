@@ -21,11 +21,13 @@ public class User {
 	private String firstName;
 	private String lastName;
 	@Column(unique=true) 
+	@NotNull(message = "Field is required!")
 	private String username;
 	private String phoneNumber;
 	private String country;
 	private String city;
 	@Column(unique=true) 
+	@NotNull(message = "Field is required!")
 	private String email;
 	private String password;
 	@OneToMany(targetEntity = Message.class)

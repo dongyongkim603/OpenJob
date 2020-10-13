@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -20,12 +21,14 @@ public class Job {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
 	private long jobId;
+	@NotNull(message = "Field is required!")
 	private String jobName;
 	private String jobDescription;
 	private double price;
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date creationDate;
+	@OneToMany(targetEntity = Review.class)
 	private List<Review> jobReview;
 	
 //---------getters and setters ----------------------	

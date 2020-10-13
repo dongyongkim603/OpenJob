@@ -13,6 +13,7 @@ public class Skill {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
 	private int skillID;
+	@NotNull(message = "Field is required!")
 	private String skilltype;
 	
 //---------getters and setters ----------------------	

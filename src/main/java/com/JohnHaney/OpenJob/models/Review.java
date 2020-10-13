@@ -13,7 +13,9 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
 	private long reviewId;
+	@NotNull(message = "Field is required!")
 	private String reviewBody;
+	@NotNull(message = "Field is required!")
 	private float rating;
 	
 //---------getters and setters ----------------------	

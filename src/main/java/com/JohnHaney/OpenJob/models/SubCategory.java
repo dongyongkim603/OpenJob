@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class SubCategory {
@@ -15,7 +17,9 @@ public class SubCategory {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
 	private int subCategoryId;
+	@NotNull(message = "Field is required!")
 	private String subCategoryName;
+	@OneToMany(targetEntity = Job.class)
 	private List<Job> jobList;
 	
 //---------getters and setters ----------------------

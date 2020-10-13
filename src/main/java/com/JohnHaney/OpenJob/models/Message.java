@@ -13,6 +13,7 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
 	private long messageId;
+	@NotNull(message = "Field is required!")
 	private String messageBody;
 	
 //---------getters and setters ----------------------
