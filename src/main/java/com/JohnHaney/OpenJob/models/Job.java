@@ -20,11 +20,11 @@ public class Job {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
-	private long jobId;
+	private Long jobId;
 	@NotNull(message = "Field is required!")
 	private String jobName;
 	private String jobDescription;
-	private double price;
+	private Double price;
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date creationDate;

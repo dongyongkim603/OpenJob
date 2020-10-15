@@ -12,7 +12,7 @@ public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
-	private long messageId;
+	private Long messageId;
 	@NotNull(message = "Field is required!")
 	private String messageBody;
 	

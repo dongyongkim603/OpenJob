@@ -15,7 +15,7 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
-	private int categoryId;
+	private Integer categoryId;
 	private String description;
 	@NotNull(message = "Field is required!")
 	private String name;

@@ -16,7 +16,7 @@ public class SubCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
-	private int subCategoryId;
+	private Integer subCategoryId;
 	@NotNull(message = "Field is required!")
 	private String subCategoryName;
 	@OneToMany(targetEntity = Job.class)

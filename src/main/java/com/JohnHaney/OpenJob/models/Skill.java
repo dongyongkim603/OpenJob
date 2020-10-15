@@ -12,7 +12,7 @@ public class Skill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull(message = "Field is required!")
-	private int skillID;
+	private Integer skillID;
 	@NotNull(message = "Field is required!")
 	private String skilltype;
 	

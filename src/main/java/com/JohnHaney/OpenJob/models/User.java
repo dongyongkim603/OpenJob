@@ -10,106 +10,175 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 public class User {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull(message = "Field is required!")
-	private long userId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userId;
 	private String firstName;
 	private String lastName;
-	@Column(unique=true) 
+	@Column(unique = true)
 	@NotNull(message = "Field is required!")
 	private String username;
 	private String phoneNumber;
 	private String country;
 	private String city;
-	@Column(unique=true) 
+	@Column(unique = true)
 	@NotNull(message = "Field is required!")
 	private String email;
 	private String password;
+	private String role;
 	@OneToMany(targetEntity = Message.class)
 	private List<Message> messages;
 	@OneToMany(targetEntity = Review.class)
 	private List<Review> reviews;
 	@OneToMany(targetEntity = Skill.class)
 	private List<Skill> skills;
+
+	public User() {
+	}
 	
+	public User(String firstName, String lastName, @NotNull(message = "Field is required!") String username,
+			String phoneNumber, @NotNull(message = "Field is required!") String email,
+			String password, String role) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
+
+	public User(String firstName, String lastName, @NotNull(message = "Field is required!") String username,
+			String phoneNumber, String country, String city, @NotNull(message = "Field is required!") String email,
+			String password, String role) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.phoneNumber = phoneNumber;
+		this.country = country;
+		this.city = city;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
 //---------getters and setters ----------------------	
-	
-	public long getUserId() {
+
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(long userId) {
+
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public List<Message> getMessages() {
 		return messages;
 	}
+
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
+
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
+
 	public List<Skill> getSkills() {
 		return skills;
 	}
+
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
+				+ username + ", phoneNumber=" + phoneNumber + ", country=" + country + ", city=" + city + ", email="
+				+ email + ", password=" + password + ", role=" + role + "]";
 	}
 
 }

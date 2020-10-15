@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>OddJobs</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<link rel="icon" th:href="@{/images/logo.png}">
+</head>
+
+<body>
+	<!--navbar-->
+
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+	<!--end of navbar-->
+	<div class="album py-5 bg-light"
+		style="margin-bottom: 10rem; padding-bottom: 3rem">
+		<div id="form">
+			<!-- Tabs Titles -->
+
+			<!-- Icon -->
+			<div class="icon">
+				<img src="../images/login_icon.png" id="icon" alt="User Icon">
+			</div>
+			<h1 id="formTitle">User Login</h1>
+			<!-- Login Form -->
+			<form th:action="@{/login/authenticate}" method="post">
+				<input type="text" name="uname" id="login" placeholder="Username">
+				<input type="password" name="psw" id="password"
+					placeholder="password"><br /> <input type="submit"
+					class="fadeIn fourth" value="Log In">
+			</form>
+
+			<!-- Remind Passowrd -->
+			<div id="formForgot">
+				<a class="recover" href="#">Forgot Password?</a>
+			</div>
+
+		</div>
+	</div>
+	<!--footer-->
+	<footer class="footer mt-auto py-3">
+		<div class="container">
+			<img src="../images/logo.png" class="logo"> <span
+				class="text-muted">Place sticky footer content here.</span>
+		</div>
+	</footer>
+	<!--end of footer-->
+</body>
+
+</html>
