@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org"  lang="en">
+
 
 <head>
 <meta charset="utf-8">
@@ -30,6 +31,7 @@
 				<p class="divider-text">
 					<span class="bg-light">OR</span>
 				</p>
+				
 				<form th:action="@{/registerUser}" method="post">
 				
 					<div class="form-group input-group" id="validation">
@@ -77,6 +79,21 @@
 							placeholder="Email address" type="email" th:field="${newUser.email}" required/>
 							
 					</div>
+					
+					<!-- form-group/country/city -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-phone"><img
+									src="" /></i>
+							</span>
+						</div>
+						<select th:field="*{newUser.country}" class="custom-select" style="max-width: 120px;">
+							<option th:each="c : ${countries}" th:value="${c}" th:text="${c}" th:selected="${c}"></option>
+						</select> 
+						<input name="city" class="form-control" id="city"
+							placeholder="city" type="text" th:field="${newUser.city}" required/>
+					</div>
+					<!-- end of country/city -->
 					<!-- form-group// -->
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
@@ -93,6 +110,7 @@
 						<input name="" class="form-control" id="phoneNumber"
 							placeholder="(555) 555-5555" type="text" th:field="${newUser.phoneNumber}" required/>
 					</div>
+					<!-- end of phone number -->
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"> <i class="fa fa-lock"></i>

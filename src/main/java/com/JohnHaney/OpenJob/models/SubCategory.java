@@ -15,7 +15,6 @@ public class SubCategory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull(message = "Field is required!")
 	private Integer subCategoryId;
 	@NotNull(message = "Field is required!")
 	private String subCategoryName;
@@ -24,10 +23,10 @@ public class SubCategory {
 	
 //---------getters and setters ----------------------
 	
-	public int getSubCategoryId() {
+	public Integer getSubCategoryId() {
 		return subCategoryId;
 	}
-	public void setSubCategoryId(int subCategoryId) {
+	public void setSubCategoryId(Integer subCategoryId) {
 		this.subCategoryId = subCategoryId;
 	}
 	public String getSubCategoryName() {

@@ -19,7 +19,6 @@ public class Job {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull(message = "Field is required!")
 	private Long jobId;
 	@NotNull(message = "Field is required!")
 	private String jobName;
@@ -54,7 +53,7 @@ public class Job {
 	public double getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	public Date getCreationDate() {

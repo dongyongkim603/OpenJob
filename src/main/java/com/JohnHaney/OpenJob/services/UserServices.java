@@ -22,15 +22,22 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 			return userRepo.findAll();
 		}
 		
-		public User findById(Integer id) {
+		public User findById(Long id) {
 			return userRepo.findById(id).get();
 		}
 		
-		public boolean existsById(Integer id) {
+		public boolean existsById(Long id) {
 			return userRepo.existsById(id);
 		}
 		
-		public void deleteById(Integer id) {
+		public boolean existsByUsername(String username) {
+			if(null != userRepo.findByUsername(username))
+				return true;
+			else
+				return false;
+		}
+		
+		public void deleteById(Long id) {
 			if (existsById(id))
 				userRepo.deleteById(id);
 		}
@@ -39,4 +46,8 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 			user.setPassword(WebSecurityConfig.passwordEncoder().encode(user.getPassword()));
 			userRepo.save(user);
 		}
+		
+//		public User getByUsername() {
+//			
+//		}
 }

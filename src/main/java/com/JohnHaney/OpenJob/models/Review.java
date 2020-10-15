@@ -11,7 +11,6 @@ public class Review {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull(message = "Field is required!")
 	private Long reviewId;
 	@NotNull(message = "Field is required!")
 	private String reviewBody;
@@ -20,10 +19,10 @@ public class Review {
 	
 //---------getters and setters ----------------------	
 	
-	public long getReviewId() {
+	public Long getReviewId() {
 		return reviewId;
 	}
-	public void setReviewId(long reviewId) {
+	public void setReviewId(Long reviewId) {
 		this.reviewId = reviewId;
 	}
 	public String getReviewBody() {
@@ -32,10 +31,10 @@ public class Review {
 	public void setReviewBody(String reviewBody) {
 		this.reviewBody = reviewBody;
 	}
-	public float getRating() {
+	public Float getRating() {
 		return rating;
 	}
-	public void setRating(float rating) {
+	public void setRating(Float rating) {
 		this.rating = rating;
 	}
 	

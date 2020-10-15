@@ -11,17 +11,16 @@ public class Skill {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull(message = "Field is required!")
 	private Integer skillID;
 	@NotNull(message = "Field is required!")
 	private String skilltype;
 	
 //---------getters and setters ----------------------	
 	
-	public int getSkillID() {
+	public Integer getSkillID() {
 		return skillID;
 	}
-	public void setSkillID(int skillID) {
+	public void setSkillID(Integer skillID) {
 		this.skillID = skillID;
 	}
 	public String getSkilltype() {

@@ -11,17 +11,16 @@ public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull(message = "Field is required!")
 	private Long messageId;
 	@NotNull(message = "Field is required!")
 	private String messageBody;
 	
 //---------getters and setters ----------------------
 	
-	public long getMessageId() {
+	public Long getMessageId() {
 		return messageId;
 	}
-	public void setMessageId(long messageId) {
+	public void setMessageId(Long messageId) {
 		this.messageId = messageId;
 	}
 	public String getMessageBody() {

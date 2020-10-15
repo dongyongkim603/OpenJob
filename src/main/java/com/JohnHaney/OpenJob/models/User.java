@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Value;
-
 @Entity
 public class User {
 
@@ -31,10 +29,16 @@ public class User {
 	private String email;
 	private String password;
 	private String role;
+	@OneToMany(targetEntity = Job.class)
+	private List<Job> jobPosts;
+	@OneToMany(targetEntity = Order.class)
+	private List<Order> orders;
 	@OneToMany(targetEntity = Message.class)
 	private List<Message> messages;
 	@OneToMany(targetEntity = Review.class)
-	private List<Review> reviews;
+	private List<Review> userReviews;
+	@OneToMany(targetEntity = Review.class)
+	private List<Review> jobReviews;
 	@OneToMany(targetEntity = Skill.class)
 	private List<Skill> skills;
 
@@ -142,6 +146,30 @@ public class User {
 		this.password = password;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public List<Job> getJobPosts() {
+		return jobPosts;
+	}
+
+	public void setJobPosts(List<Job> jobPosts) {
+		this.jobPosts = jobPosts;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 	public List<Message> getMessages() {
 		return messages;
 	}
@@ -150,12 +178,20 @@ public class User {
 		this.messages = messages;
 	}
 
-	public List<Review> getReviews() {
-		return reviews;
+	public List<Review> getUserReviews() {
+		return userReviews;
 	}
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
+	public void setUserReviews(List<Review> userReviews) {
+		this.userReviews = userReviews;
+	}
+
+	public List<Review> getJobReviews() {
+		return jobReviews;
+	}
+
+	public void setJobReviews(List<Review> jobReviews) {
+		this.jobReviews = jobReviews;
 	}
 
 	public List<Skill> getSkills() {
@@ -166,19 +202,10 @@ public class User {
 		this.skills = skills;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
 				+ username + ", phoneNumber=" + phoneNumber + ", country=" + country + ", city=" + city + ", email="
-				+ email + ", password=" + password + ", role=" + role + "]";
+				+ email + ", role=" + role + "]";
 	}
-
 }

@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -38,34 +39,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
-	PasswordEncoder defaultEncoder = new BCryptPasswordEncoder();//bcrypt as default
+		PasswordEncoder defaultEncoder = new BCryptPasswordEncoder();// bcrypt as default
 
-	String idForEncode = "bcrypt";
+		String idForEncode = "bcrypt";
 
-	Map<String, PasswordEncoder> encoders = new HashMap<>();
-	//add each type of encryption to the map
-	encoders.put(idForEncode,new BCryptPasswordEncoder());//fast but not very secure
-	encoders.put("noop",NoOpPasswordEncoder.getInstance());//plaintext no encryption
-	encoders.put("pbkdf2",new Pbkdf2PasswordEncoder());
-	encoders.put("scrypt",new SCryptPasswordEncoder());//very secure but large computational demand
-	encoders.put("sha256",new StandardPasswordEncoder());
+		Map<String, PasswordEncoder> encoders = new HashMap<>();
+		// add each type of encryption to the map
+		encoders.put(idForEncode, new BCryptPasswordEncoder());// fast but not very secure
+		encoders.put("noop", NoOpPasswordEncoder.getInstance());// plaintext no encryption
+		encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+		encoders.put("scrypt", new SCryptPasswordEncoder());// very secure but large computational demand
+		encoders.put("sha256", new StandardPasswordEncoder());
 
-	DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
+		DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(idForEncode, encoders);
 
-	passwordEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);//set a default
+		passwordEncoder.setDefaultPasswordEncoderForMatches(defaultEncoder);// set a default
 
-	return passwordEncoder;
-
-}
+		return passwordEncoder;
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		auth.inMemoryAuthentication()
-		.withUser("spring")
-		.password(encoder.encode("spring"))
-		.roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("spring").password(encoder.encode("spring")).roles("ADMIN");
 	}
 
 	@Override
@@ -76,12 +73,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/login").permitAll();
-		http.authorizeRequests().antMatchers("/TODO").hasRole("USER");//sets permissions the page TODO: add in login/registration page/controller
+		http.authorizeRequests().antMatchers("/TODO").hasRole("USER");// sets permissions the page TODO: add in
+																		// login/registration page/controller
 
 		http.authorizeRequests()
 
 				.and()
 
+				// this acts like session
 				.formLogin().loginPage("/login").loginProcessingUrl("/login/authenticate").permitAll()
 				.failureUrl("/login?error=true").defaultSuccessUrl("/").usernameParameter("uname")
 				.passwordParameter("psw")
@@ -92,7 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.and()
 
-				.logout().logoutSuccessUrl("/login").permitAll()
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and()
+				.exceptionHandling().accessDeniedPage("/accessdenied")
 
 				.and()
 
