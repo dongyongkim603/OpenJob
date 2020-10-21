@@ -1,5 +1,8 @@
 package com.JohnHaney.OpenJob.models;
 
+import java.time.LocalDate;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +17,8 @@ public class Message {
 	private Long messageId;
 	@NotNull(message = "Field is required!")
 	private String messageBody;
+	@Basic
+	private LocalDate sentTime;
 	
 //---------getters and setters ----------------------
 	
@@ -28,6 +33,12 @@ public class Message {
 	}
 	public void setMessageBody(String messageBody) {
 		this.messageBody = messageBody;
+	}
+	public LocalDate getSentTime() {
+		return sentTime;
+	}
+	public void setSentTime(LocalDate sentTime) {
+		this.sentTime = sentTime;
 	}
 	
 }

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer categoryId;
 	private String description;
 	@NotNull(message = "Field is required!")

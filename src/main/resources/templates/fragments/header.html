@@ -30,17 +30,28 @@
 							class="dropdown-item" href="dictionary.html">Phonetic
 							Dictionary</a> <a class="dropdown-item" href="Message.html">message</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
+						<a class="dropdown-item" href="postjob">Post a Job</a>
 					</div></li>
-				<li class="nav-item dropdown"><a
+				<!-- conditional user not logged in -->
+				<li th:if="${session.currentUser == null}" class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> User Account </a>
+					aria-expanded="false"> Login </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="login">Log in</a> <a
+						<a class="dropdown-item" href="login">Login</a> <a
 							class="dropdown-item" href="register">Sign up</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li>
+				<!-- conditional user is logged in -->
+				<li th:unless="${session.currentUser == null}"
+					class="nav-item dropdown"><a class="nav-link dropdown-toggle"
+					href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+						<th th:text="${session.currentUser.username}"></th>
+				</a>
+					<div th:unless="${session.currentUser == null}"
+						class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" th:href="@{/logout}">Logout</a> <a
+							class="dropdown-item" href="#">Profile</a>
 					</div></li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">

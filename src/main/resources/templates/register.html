@@ -81,18 +81,23 @@
 					</div>
 					
 					<!-- form-group/country/city -->
+					
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"> <i class="fa fa-phone"><img
 									src="" /></i>
 							</span>
 						</div>
+						
 						<select th:field="*{newUser.country}" class="custom-select" style="max-width: 120px;">
 							<option th:each="c : ${countries}" th:value="${c}" th:text="${c}" th:selected="${c}"></option>
 						</select> 
+						
+						
 						<input name="city" class="form-control" id="city"
 							placeholder="city" type="text" th:field="${newUser.city}" required/>
 					</div>
+					
 					<!-- end of country/city -->
 					<!-- form-group// -->
 					<div class="form-group input-group">
@@ -135,8 +140,8 @@
 							</span>
 						</div>
 						<select class="custom-select" style="max-width: 120px;" th:field="${newUser.role}">
-							<option selected="" value="SHOPPER">Shopper</option>
-							<option value="FREELANCER">Freelancer</option>
+							<option selected="" value="ROLE_SHOPPER">Shopper</option>
+							<option value="ROLE_FREELANCER">Freelancer</option>
 						</select> 
 					</div>
 						<!-- end of form group  -->

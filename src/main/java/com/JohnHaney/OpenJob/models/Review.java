@@ -1,5 +1,8 @@
 package com.JohnHaney.OpenJob.models;
 
+import java.time.LocalDate;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +13,14 @@ import javax.validation.constraints.NotNull;
 public class Review {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long reviewId;
 	@NotNull(message = "Field is required!")
 	private String reviewBody;
 	@NotNull(message = "Field is required!")
 	private Float rating;
+	@Basic
+	private LocalDate creationDate;
 	
 //---------getters and setters ----------------------	
 	
@@ -36,6 +41,12 @@ public class Review {
 	}
 	public void setRating(Float rating) {
 		this.rating = rating;
+	}
+	public LocalDate getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(LocalDate creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 }

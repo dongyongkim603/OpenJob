@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class SubCategory {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer subCategoryId;
 	@NotNull(message = "Field is required!")
 	private String subCategoryName;

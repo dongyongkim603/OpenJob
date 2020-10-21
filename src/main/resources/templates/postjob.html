@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<!--navbar-->
+
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+	<!--end of navbar-->
+	<div class="album py-5 bg-light"
+		style="margin-bottom: 10rem; padding: 3rem">
+		<!--registration form-->
+		<div id="form">
+			<article class="card-body mx-auto" style="max-width: 400px;">
+				<div id="feedback"></div>
+				<h4 class="card-title mt-3 text-center">Post a New Job</h4>
+				<p class="text-center">What services do you have to offer?</p>
+
+				<form th:action="@{/postNewJob}" method="post"
+					enctype="multipart/form-data">
+
+					<div class="form-group input-group" id="validation">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><img
+								src="../images/icons8-change-user-26.png" /> </span>
+						</div>
+
+						<input class="form-control" id="jobName" placeholder="Job Title"
+							type="text" th:field="${newJob.jobName}" required />
+					</div>
+
+					<!-- form-group-description// -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><img
+								src="../images/icons8-change-user-26.png" /> </span>
+						</div>
+
+						<input class="form-control" id="description"
+							placeholder="Description" type="text"
+							th:field="${newJob.jobDescription}" required />
+					</div>
+					<!-- end-form-group-description// -->
+
+					<!-- form-group-price// -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><img
+								src="../images/icons8-change-user-26.png" /> </span>
+						</div>
+
+						<input class="form-control" id="description"
+							placeholder="Price" type="text"
+							th:field="${newJob.price}" required />
+					</div>
+					<!-- end-form-group-price// -->
+
+					<label> <input type="checkbox" id="accept"
+						onchange="activateButton(this)"> I accept <a href="#">terms</a>
+					</label>
+					<!-- form-group// -->
+					<div class="form-group" id="form-group" style="margin: auto;">
+						<input type="file" id="file" class="fadeIn fourth"
+							name="imageFile" value="Upload Photos" />
+					</div>
+					<!-- form-group// -->
+					<!-- form-group// -->
+					<div class="form-group" id="form-group">
+						<input type="submit" id="submit" class="fadeIn fourth"
+							value="Submit" />
+					</div>
+					<!-- form-group// -->
+				</form>
+			</article>
+		</div>
+	</div>
+	<!--footer-->
+
+	<!--/*/ <th:block th:include="fragments/footer :: foot"></th:block> /*/-->
+
+	<!--end of navbar-->
+</body>
+</html>

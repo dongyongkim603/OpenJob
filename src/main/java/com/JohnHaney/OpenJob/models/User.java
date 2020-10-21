@@ -2,8 +2,10 @@ package com.JohnHaney.OpenJob.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="userId")
 	private Long userId;
 	private String firstName;
 	private String lastName;
@@ -29,8 +32,11 @@ public class User {
 	private String email;
 	private String password;
 	private String role;
-	@OneToMany(targetEntity = Job.class)
+	
+	//@MapBy, @CascadeBy...
+	@OneToMany(targetEntity=Job.class, cascade = CascadeType.ALL, mappedBy = "user", fetch=FetchType.LAZY)
 	private List<Job> jobPosts;
+	
 	@OneToMany(targetEntity = Order.class)
 	private List<Order> orders;
 	@OneToMany(targetEntity = Message.class)

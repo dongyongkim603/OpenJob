@@ -3,8 +3,6 @@ package com.JohnHaney.OpenJob.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.JohnHaney.OpenJob.DAO.UserRepoIF;
@@ -16,7 +14,6 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 
 		@Autowired
 		UserRepoIF userRepo;
-		
 		
 		public List<User> findAll() {
 			return userRepo.findAll();
@@ -31,7 +28,7 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 		}
 		
 		public boolean existsByUsername(String username) {
-			if(null != userRepo.findByUsername(username))
+			if(null == userRepo.findByUsername(username))
 				return true;
 			else
 				return false;
@@ -49,5 +46,5 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 		
 //		public User getByUsername() {
 //			
-//		}
+//		}	
 }

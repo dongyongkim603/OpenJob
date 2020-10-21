@@ -19,17 +19,10 @@ import com.JohnHaney.OpenJob.models.User;
 import com.JohnHaney.OpenJob.services.UserServices;
 
 @Controller
-public class ProfileController {
+public class RegisterController {
 
 	@Autowired
 	UserServices userService;
-
-//	@GetMapping("/profile")
-//	public String profilePage(Model userModel, Principal principal) {
-//		String un = principal.getName();
-//		
-//		userModel.addAllAttributes(attributeValues);
-//	}
 
 	@GetMapping("/register")
 	public String adduser(Model modelUsers, Model modelContires) {
@@ -45,8 +38,8 @@ public class ProfileController {
 //				System.out.println("array is empty");
 //			else
 //			System.out.println(c);
-
 		// container for new user
+
 		modelUsers.addAttribute("newUser", newUser);
 
 		return "register";
@@ -55,10 +48,18 @@ public class ProfileController {
 	@PostMapping("/registerUser")
 	public String saveUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult bind) {
 		// newUser.toString();
-		if (!userService.existsByUsername(newUser.getUsername())) {
-			userService.save(newUser);			
-			return "redirect:/";
-		} 
-		return "register";
+		String returnValue = "";
+		try {
+			if (!userService.existsByUsername(newUser.getUsername())) {
+				userService.save(newUser);
+				returnValue = "redirect:/";
+			}else {
+				returnValue = "register";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			returnValue = "redirect:/";
+		}
+		return returnValue;
 	}
 }

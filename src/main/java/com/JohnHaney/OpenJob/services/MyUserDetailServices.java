@@ -1,4 +1,4 @@
-package com.JohnHaney.OpenJob.security;
+package com.JohnHaney.OpenJob.services;
 
 import java.util.Optional;
 
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.JohnHaney.OpenJob.DAO.UserRepoIF;
 import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.security.MyUserDetials;
 
 @Service
 public class MyUserDetailServices implements UserDetailsService {
