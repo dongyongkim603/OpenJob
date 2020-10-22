@@ -24,6 +24,7 @@
 				<form th:action="@{/postNewJob}" method="post"
 					enctype="multipart/form-data">
 
+					<!-- form-group-jobName -->
 					<div class="form-group input-group" id="validation">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
@@ -33,7 +34,8 @@
 						<input class="form-control" id="jobName" placeholder="Job Title"
 							type="text" th:field="${newJob.jobName}" required />
 					</div>
-
+					<!-- end-form-group-jobName -->	
+						
 					<!-- form-group-description// -->
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
@@ -54,8 +56,8 @@
 								src="../images/icons8-change-user-26.png" /> </span>
 						</div>
 
-						<input class="form-control" id="description"
-							placeholder="Price" type="text"
+						<input class="form-control" id="price"
+							placeholder="Price" type="number"
 							th:field="${newJob.price}" required />
 					</div>
 					<!-- end-form-group-price// -->

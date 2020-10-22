@@ -41,15 +41,20 @@ public class PhotoServices {
 		photoRepo.save(photo);
 	}
 	
-//	public List<Photo> findAll() {
-//		return photoRepo.findAll();
-//	}
+	public List<Photo> findAll() {
+		return photoRepo.findAll();
+	}
 	
 	public Photo findById(Long id) {
 		return photoRepo.findById(id).get();
 	}
 	
+	public List<Photo> findByJob(Job job) {
+		return photoRepo.findAllByJob(job).get();
+	}
+	
 	public boolean existsById(Long id) {
 		return photoRepo.existsById(id);
 	}
+
 }

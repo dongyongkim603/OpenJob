@@ -4,13 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -61,7 +58,7 @@ public class Job {
 	public void setJobDescription(String jobDescription) {
 		this.jobDescription = jobDescription;
 	}
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 	public void setPrice(Double price) {

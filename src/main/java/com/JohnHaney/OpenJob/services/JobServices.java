@@ -4,12 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.JohnHaney.OpenJob.DAO.IPhotoDAO;
 import com.JohnHaney.OpenJob.DAO.JobRepoIF;
 import com.JohnHaney.OpenJob.models.Job;
-import com.JohnHaney.OpenJob.models.Photo;
 
 @Service
 public class JobServices {

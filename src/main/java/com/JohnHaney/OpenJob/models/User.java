@@ -33,7 +33,6 @@ public class User {
 	private String password;
 	private String role;
 	
-	//@MapBy, @CascadeBy...
 	@OneToMany(targetEntity=Job.class, cascade = CascadeType.ALL, mappedBy = "user", fetch=FetchType.LAZY)
 	private List<Job> jobPosts;
 	
