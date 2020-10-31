@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,16 +28,9 @@ public class Job {
 	//bidirectional
 	@ManyToOne
 	private User user;
-	
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	@Basic
 	private LocalDate creationDate;
-	@OneToMany(targetEntity = Review.class)
+	@OneToMany(targetEntity = Review.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	private List<Review> jobReview;
 	
 //---------getters and setters ----------------------	
@@ -76,4 +71,12 @@ public class Job {
 	public void setJobReview(List<Review> jobReview) {
 		this.jobReview = jobReview;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

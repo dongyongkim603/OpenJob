@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>OddJobs</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<link rel="icon" th:href="@{/images/logo.png}">
+</head>
+
+<body>
+
+	<!--navbar-->
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+	<!--end of navbar-->
+
+
+	<!--Flexbox gid-->
+	<div class="album py-5 bg-light"
+		style="margin-bottom: 10rem; padding: 3rem">
+		<!-- Login Form -->
+		<div id="form">
+			<!-- Tabs Titles -->
+
+			<!-- Icon -->
+			<div class="icon">
+				<h5 id="subtitle">ask more about our services...</h5>
+			</div>
+
+			<form style="padding: 2rem;">
+				<input type="text" id="login" placeholder="Name"> <input
+					type="text" id="login" placeholder="Phone number"><br /> <select
+					id="description" name="description"
+					placeholder="Reason for contact">
+					<option value="Review">Job</option>
+					<option value="Complaint">Review</option>
+					<option value="Career">Estimate</option>
+					<option value="More Information">More Information</option>
+				</select><br />
+				<textarea rows="4" cols="50" id="login"
+					placeholder="Write message here..."></textarea>
+				<br /> <input type="submit" value="Send Message">
+			</form>
+
+		</div>
+
+	</div>
+	<!--footer-->
+
+	<!--/*/ <th:block th:include="fragments/footer :: foot"></th:block> /*/-->
+
+	<!--end of navbar-->
+</body>
+
+</html>

@@ -10,6 +10,7 @@ import com.JohnHaney.OpenJob.DAO.IPhotoDAO;
 import com.JohnHaney.OpenJob.DAO.PhotoRepoIF;
 import com.JohnHaney.OpenJob.models.Job;
 import com.JohnHaney.OpenJob.models.Photo;
+import com.JohnHaney.OpenJob.models.User;
 
 @Service
 public class PhotoServices {
@@ -56,5 +57,8 @@ public class PhotoServices {
 	public boolean existsById(Long id) {
 		return photoRepo.existsById(id);
 	}
-
+	
+	public List<Photo> findByUser(User user) {
+		return photoRepo.findAllByUser(user).get();
+	}
 }

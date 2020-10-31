@@ -14,6 +14,10 @@ public final class SecurityUtils {
 	private SecurityUtils() {
 	}
 
+	/**
+	 * 
+	 * @return finds and returns the current users username
+	 */
 	public static String getUser() {
 
 		SecurityContext securityContext = SecurityContextHolder.getContext();

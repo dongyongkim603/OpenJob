@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Edit Job</title>
 <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
@@ -18,29 +18,29 @@
 		<div id="form">
 			<article class="card-body mx-auto" style="max-width: 400px;">
 				<div id="feedback"></div>
-				<h4 class="card-title mt-3 text-center">Post a New Job</h4>
-				<p class="text-center">What services do you have to offer?</p>
+				<h4 class="card-title mt-3 text-center">Edit details of this
+					job</h4>
 
-				<form th:action="@{/postNewJob}" method="post"
+				<form th:action="@{/postNewJob}" method="post" th:object="${newJob}"
 					enctype="multipart/form-data">
-
+					<input type="hidden" th:field="${newJob.jobId}" />
 					<!-- form-group-jobName -->
 					<div class="form-group input-group" id="validation">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
-								src="../images/icons8-change-user-26.png" /> </span>
+								src="/images/icons8-change-user-26.png" /> </span>
 						</div>
 
 						<input class="form-control" id="jobName" placeholder="Job Title"
 							type="text" th:field="${newJob.jobName}" required />
 					</div>
-					<!-- end-form-group-jobName -->	
-						
+					<!-- end-form-group-jobName -->
+
 					<!-- form-group-description// -->
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
-								src="../images/icons8-change-user-26.png" /> </span>
+								src="/images/icons8-change-user-26.png" /> </span>
 						</div>
 
 						<input class="form-control" id="description"
@@ -53,12 +53,11 @@
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
-								src="../images/icons8-change-user-26.png" /> </span>
+								src="/images/icons8-change-user-26.png" /> </span>
 						</div>
 
-						<input class="form-control" id="price"
-							placeholder="Price" type="number"
-							th:field="${newJob.price}" required />
+						<input class="form-control" id="price" placeholder="Price"
+							type="number" th:field="${newJob.price}" required />
 					</div>
 					<!-- end-form-group-price// -->
 
@@ -68,13 +67,26 @@
 							name="imageFile" value="Upload Photos" />
 					</div>
 					<!-- form-group// -->
-					<!-- form-group// -->
+
+					<!-- submit button -->
 					<div class="form-group" id="form-group">
 						<input type="submit" id="submit" class="fadeIn fourth"
 							value="Submit" />
 					</div>
-					<!-- form-group// -->
+					<!-- end of submit button -->
+					<hr />
+					<input type="hidden" th:field="${newJob.user}" />
+
 				</form>
+
+				<!-- delete job Button -->
+				<div class="form-group" id="form-group">
+					<a th:href="@{/deleteJob/{id}(id=${newJob.jobId})}"
+						method="delete"><input type="submit" id="remove"
+						class="fadeIn fourth" value="Remove Job"
+						style="background-color: black;" /></a>
+				</div>
+				<!-- end of delete job button -->
 			</article>
 		</div>
 	</div>

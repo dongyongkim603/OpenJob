@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,6 +20,8 @@ public class Message {
 	private String messageBody;
 	@Basic
 	private LocalDate sentTime;
+	@ManyToOne
+	private User sender;
 	
 //---------getters and setters ----------------------
 	
@@ -39,6 +42,12 @@ public class Message {
 	}
 	public void setSentTime(LocalDate sentTime) {
 		this.sentTime = sentTime;
+	}
+	public User getSender() {
+		return sender;
+	}
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
 	
 }

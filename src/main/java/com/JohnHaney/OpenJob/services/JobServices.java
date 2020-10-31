@@ -3,13 +3,16 @@ package com.JohnHaney.OpenJob.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.JohnHaney.OpenJob.DAO.JobRepoIF;
 import com.JohnHaney.OpenJob.models.Job;
 
 @Service
-public class JobServices {
+public class JobServices implements JobServicesIF {
 	
 	@Autowired
 	JobRepoIF jobRepo;
@@ -40,5 +43,11 @@ public class JobServices {
 	
 	public boolean existsById(Long id) {
 		return jobRepo.existsById(id);
+	}
+	
+	@Override
+	public Page<Job> findPaginated(int pageNumber, int pageSize){
+		Pageable pageable = PageRequest.of(pageNumber -1, pageSize);
+		return jobRepo.findAll(pageable);
 	}
 }

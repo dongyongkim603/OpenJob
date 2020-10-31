@@ -37,10 +37,11 @@
 				<form th:action="@{/registerUser}" method="post" th:object="${newUser}"
 					enctype="multipart/form-data">
 					<input type="hidden" th:field="${newUser.userId}" />
+
 					<div class="form-group input-group" id="validation">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
-								src="../images/icons8-change-user-26.png" /> </span>
+								src="/images/icons8-change-user-26.png" /> </span>
 						</div>
 
 						<input class="form-control" id="firstName"
@@ -98,18 +99,18 @@
 							style="max-width: 120px;">
 							<option th:each="c : ${countries}" th:value="${c}" th:text="${c}"
 								th:selected="${c}"></option>
-								
 						</select> <input name="city" class="form-control" id="city"
 							placeholder="city" type="text" th:field="${newUser.city}"
 							required />
 					</div>
 
 					<!-- end of country/city -->
+					
 					<!-- form-group// -->
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"> <i class="fa fa-phone"><img
-									src="../images/icons8-phone-26.png" /></i>
+									src="/images/icons8-phone-26.png" /></i>
 							</span>
 						</div>
 						<select class="custom-select" style="max-width: 120px;">
@@ -122,113 +123,24 @@
 							th:field="${newUser.phoneNumber}" required />
 					</div>
 					<!-- end of phone number -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-lock"></i>
-							</span>
-						</div>
-						<input class="form-control" id="passwordFirst"
-							placeholder="Create password" type="password" required />
-					</div>
-					<!-- form-group// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-lock"></i>
-							</span>
-						</div>
-						<input class="form-control" id="password"
-							placeholder="Repeat password" type="password"
-							th:field="${newUser.password}" required />
-					</div>
-					<!-- form group -->
-					<div class="form-group input-group" style="margin-top: auto">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> </span>
-						</div>
-						<select class="custom-select" style="max-width: 120px;"
-							th:field="${newUser.role}">
-							<option selected="" value="ROLE_SHOPPER">Shopper</option>
-							<option value="ROLE_FREELANCER">Freelancer</option>
-						</select>
-					</div>
 
 					<!-- upload profile picture -->
-					<div class="form-group" id="form-group" style="margin: auto;">
+					<div class="form-group" id="form-group" >
 						<input type="file" id="file" class="fadeIn fourth"
 							name="imageFile" value="Upload Photos" />
 					</div>
-					<!-- upload profile picture -->
-					
-					<!-- end of form group  -->
-					<label> <input type="checkbox" id="accept"
-						onchange="activateButton(this)"> I accept <a href="#"
-						data-toggle="modal" data-target="#exampleModal">terms</a>
-					</label>
-					<!-- form-group// -->
+					<!-- end of upload profile picture -->
+					<br />
 					<div class="form-group" id="form-group">
+
 						<input type="submit" id="submit" class="fadeIn fourth"
 							value="Submit" />
 					</div>
 					<!-- form-group// -->
-					<p class="text-center">
-						Have an account? <a href="login">Log In</a>
-					</p>
 				</form>
 			</article>
 		</div>
 	</div>
-
-
-	<!-- Button trigger modal -->
-
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">Lorem ipsum dolor sit amet,
-					consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-					labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-					nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate
-					velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-					occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-					mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur
-					adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-					dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-					exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate
-					velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-					occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-					mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur
-					adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-					dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-					exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate
-					velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-					occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-					mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur
-					adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-					dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-					exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate
-					velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-					occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-					mollit anim id est laborum.</div>
-				<div class="modal-footer">
-
-				</div>
-			</div>
-		</div>
-	</div>
-
 
 
 	<!--footer-->

@@ -3,8 +3,8 @@
 	<div class="col-md-4" th:each="j: ${jobList}">
 		<div class="card mb-4 box-shadow">
 			<!--carousel-->
-			
-			
+
+
 			<div id="slides1" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
 					<li data-target="#slides1" data-slide-to="0" class="active"></li>
@@ -19,10 +19,14 @@
 							alt="First slide">
 					</div>
 
-					<div class="carousel-item" th:each="photo: ${photos}">
-						<img class="d-block w-100" th:src="@{${'/photos/' + photo.fileName}}"
-							alt="Second slide">
-					</div>
+					<span th:each="photo: ${photos}">
+						<tr th:if="${photo.job == j}">
+							<div class="carousel-item">
+								<img class="d-block w-100"
+									th:src="@{${'/photos/' + photo.fileName}}" alt="Second slide">
+							</div>
+						</tr>
+					</span>
 				</div>
 				<!-- end of images -->
 
@@ -38,25 +42,41 @@
 			<div class="card-body">
 				<!-- jobDescription -->
 				<tr class="card-text">
-					<h3><td th:text="${j.jobName}"></td></h3>
+					<h3>
+						<td th:text="${j.jobName}"></td>
+					</h3>
 				</tr>
 				<br />
 				<tr class="card-text">
-					<td th:text="${j.jobDescription}"></td>
+					<td th:text="${j.jobDescription}" ></td>
+					<br/>
+					$<td th:text="${j.price}"></td>
 				</tr>
 				<div class="d-flex justify-content-between align-items-center">
-
-					<div class="btn-group">
+					<div class="btn-group"
+						th:if="${session.currentUser == null or session.currentUser.role == 'ROLE_SHOPPER'}">
+						<br />
+						<button type="button" class="btn btn-sm btn-primary"
+							id="button-color"><a th:href="@{/contactForm/{userID}(userID = ${j.user.userId})}">Message</a></button>
+					</div>
+					<div class="btn-group"
+						th:unless="${session.currentUser == null or session.currentUser.role == 'ROLE_SHOPPER'}">
+						<br />
 						<button type="button" class="btn btn-sm btn-primary"
 							id="button-color"
-							onclick="window.location.href='ContactForm.html';">Message</button>
-						<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+							><a th:href="@{/contactForm/{userID}(userID = ${j.user.userId})}">Message</a></button>
+						
+						<!-- edit job button -->	
+						<span th:if="${j.user == session.currentUser}"><button type="button" class="btn btn-sm btn-outline-secondary"
+							><a th:href="@{/postJob/edit/{id}(id=${j.jobId})}">Edit</a></button></span>
+						<!-- end of edit job button -->
+						
 					</div>
 				</div>
 				<br /> <small class="text-muted">created on: <small
 					class="text-muted" th:text="${j.creationDate}"></small></small><br /> <small
-					class="text-muted">created by: <small class="text-muted"
-					th:text="${j.user.username}"></small></small>
+					class="text-muted">created by: <a th:href="@{/profile/{userProfileID}(userProfileID = ${j.user.userId})}"><small class="text-muted"
+					th:text="${j.user.username}"></small></a></small>
 
 			</div>
 		</div>

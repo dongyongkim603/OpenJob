@@ -38,7 +38,7 @@ public class User {
 	
 	@OneToMany(targetEntity = Order.class)
 	private List<Order> orders;
-	@OneToMany(targetEntity = Message.class)
+	@OneToMany(targetEntity = Message.class, cascade = CascadeType.ALL, mappedBy = "sender", fetch=FetchType.LAZY)
 	private List<Message> messages;
 	@OneToMany(targetEntity = Review.class)
 	private List<Review> userReviews;

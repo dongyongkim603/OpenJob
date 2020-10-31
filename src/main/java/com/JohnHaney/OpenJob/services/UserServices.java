@@ -34,6 +34,10 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 				return false;
 		}
 		
+		public User findByUsername(String username) {
+			return userRepo.findByUsername(username).get();
+		}
+		
 		public void deleteById(Long id) {
 			if (existsById(id))
 				userRepo.deleteById(id);
