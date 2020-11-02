@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,19 +40,37 @@ public class UserController {
 	@Autowired
 	UserRepoIF userRepo;
 
+	/**
+	 * forwards the user to the registration page and generates new UserDTO to be
+	 * added to the model.
+	 * 
+	 * @param modelUsers    stores the new UserDTO
+	 * @param modelContires stores the list of countries
+	 * @return sends user to the registration page
+	 */
 	@GetMapping("/register")
-	public String adduser(Model modelUsers, Model modelContires) {
+	public String addUser(Model modelUsers, Model modelContires) {
 		// object of Users
 		UserDTO newUser = new UserDTO();
+
+		// calls static method that reads list of countries to be added to view
 		ArrayList<String> countries = new ArrayList<>();
 		countries = LoadDictionaries.initiateDicationary();
 		modelContires.addAttribute("countries", countries);
-
 		modelUsers.addAttribute("newUser", newUser);
 
 		return "register";
 	}
 
+	/**
+	 * Allows the user to modify the data that is related to their UserDTO.
+	 * Retrieves the user by searching the database based on the PathVarible of the
+	 * target user and passes the DTO to the model
+	 * 
+	 * @param model  stores the UserDTO data retrieved from the database
+	 * @param userId the userId of the target user
+	 * @return will send users to the editProfile view page
+	 */
 	@GetMapping("/register/edit/{id}")
 	public String editProfile(Model model, @PathVariable("id") Long userId) {
 		UserDTO editUser = userService.findById(userId);
@@ -65,12 +82,21 @@ public class UserController {
 		return "editProfile";
 	}
 
+	/**
+	 * TODO: finish delete method once all related DTO controllers have been
+	 * implemented Allows user to remove their data from the system.
+	 * 
+	 * @param model
+	 * @param userId
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/deleteProfile/{id}")
 	public String deleteProfile(Model model, @PathVariable("id") Long userId, HttpSession session) {
 		System.out.println("deleting user...");
 		UserDTO user = userService.findById(userId);
-		
-		//try to delete all photos related to User
+
+		// try to delete all photos related to User
 		try {
 			List<PhotoDTO> photo = photoServices.findByUser(user);
 			for (PhotoDTO p : photo) {
@@ -79,24 +105,34 @@ public class UserController {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
-		//try to delete all jobs from user
-		
-		
+
+		// try to delete all jobs from user
+
 		userService.deleteById(userId);
 		System.out.println("user was Deleted... ");
 		session.removeAttribute("currentUser");
 		return "index";
 	}
 
+	/**
+	 * Allows the user to persist the data that was taken from the registration page
+	 * as a new UserDTO.
+	 * 
+	 * @param newUser   the data taken from the model that was entered from the view
+	 *                  by the user
+	 * @param imageFile the multipartFile data taken from the page. Contains the
+	 *                  Byte data of the uploaded photo
+	 * @param bind
+	 * @return will redirect the user to the login view page
+	 */
 	@PostMapping("/registerUser")
 	public ModelAndView saveUser(@Valid @ModelAttribute("newUser") UserDTO newUser,
 			@RequestParam("imageFile") MultipartFile imageFile, BindingResult bind) {
 		ModelAndView modelAndView = new ModelAndView();
 		// newUser.toString();
 		try {
-				userService.save(newUser);
-				modelAndView.setViewName("redirect:/login");
+			userService.save(newUser);
+			modelAndView.setViewName("redirect:/login");
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelAndView.setViewName("register");
@@ -105,7 +141,7 @@ public class UserController {
 			ArrayList<String> countries = new ArrayList<>();
 			countries = LoadDictionaries.initiateDicationary();
 			modelAndView.addObject("countries", countries);
-		} 
+		}
 		if (!imageFile.isEmpty()) {
 			// create new photo from uploaded MultipartFile
 			PhotoDTO photo = new PhotoDTO();
@@ -124,23 +160,30 @@ public class UserController {
 				return modelAndView;
 			}
 		}
-		
+
 		modelAndView.addObject("newUser", newUser);
 		return modelAndView;
 	}
 
 	/**
+	 * Finds the target user and retrieves the data from the database. The found
+	 * UserDTO is passed to the ModelAndView to dynamically populate the user
+	 * profile with the user details
 	 * 
-	 * @param userId
-	 * @return
+	 * @param userId the target UserDTO's userId
+	 * @return will send the users to the target userProfile view page
 	 */
 	@GetMapping("/profile/{userProfileID}")
 	public ModelAndView findUserProfile(@PathVariable(value = "userProfileID") Long userId) {
 		ModelAndView modelAndView = new ModelAndView();
-
+		UserDTO activeUser = new UserDTO();
 		modelAndView.setViewName("profile");
 
-		UserDTO activeUser = userRepo.findById(userId).get();
+		try {
+			activeUser = userRepo.findById(userId).get();
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
 
 		modelAndView.addObject("user", activeUser);
 
@@ -161,13 +204,20 @@ public class UserController {
 	}
 
 	/**
-	 * 
-	 * @param session
-	 * @return
+	 * Finds the current user and creates a UserDTO to be passed to the session. This data will be used by the update handler
+	 * method
+	 * @param session stores the current users details
+	 * @return sends the user to the editProfile view page
 	 */
 	@GetMapping("/editProfile")
 	public ModelAndView getEditUserProfile(ModelAndView session) {
-		UserDTO currentUser = userService.findByUsername(SecurityUtils.getUser());
+		UserDTO currentUser = new UserDTO();
+		try {
+			currentUser = userService.findByUsername(SecurityUtils.getUser());
+		}catch(Exception e) {
+			e.getLocalizedMessage();
+		}
+		
 		session.addObject("currentUser", currentUser);
 		session.setViewName("user/editProfile");
 		return session;

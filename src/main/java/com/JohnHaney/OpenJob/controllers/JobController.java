@@ -106,6 +106,14 @@ public class JobController {
 		return modelAndView;
 	}
 
+	/**
+	 * captures the jobId from the PathVariable and searches the database for the
+	 * target job. This job is then passed to the Post handler.
+	 * 
+	 * @param model will store the target job retrieved from the database
+	 * @param jobId the of the target job
+	 * @return the editJob view
+	 */
 	@GetMapping("/postJob/edit/{id}")
 	public String editJob(Model model, @PathVariable("id") Long jobId) {
 		JobDTO editJob = jobServices.findById(jobId);
@@ -113,8 +121,16 @@ public class JobController {
 		return "editJob";
 	}
 
+	/**
+	 * Allows the user to remove the job from the system and database. Will fetch
+	 * all the data that has a foreign key enforced relationship and will update and
+	 * delete those tuples as well.
+	 * 
+	 * @param jobId The target jobId retrieved from the PathVariable
+	 * @return
+	 */
 	@GetMapping("/deleteJob/{jobId}")
-	public String deleteJob(Model model, @PathVariable("jobId") Long jobId, HttpSession session) {
+	public String deleteJob(@PathVariable("jobId") Long jobId) {
 		System.out.println("deleting job...");
 		JobDTO job = jobServices.findById(jobId);
 
@@ -133,6 +149,7 @@ public class JobController {
 			List<CartDTO> cartList = cartServices.findByJob(jobId);
 			for (CartDTO c : cartList) {
 				c.removeFromCart(job);
+				c.updateTotal();
 				cartServices.save(c);
 			}
 		} catch (Exception e) {
@@ -154,19 +171,28 @@ public class JobController {
 		return "index";
 	}
 
+	/**
+	 * Retrieves the jobId from the PathVarible and searches for the job in the
+	 * database.
+	 * 
+	 * @param model stores the data from the retrieved job, the data of the job
+	 *              owner, the photos of the job, and the reviews of the job
+	 * @param jobId the target jobId
+	 * @return the job view of the target job
+	 */
 	@GetMapping("/job/{id}")
 	public String showJobPage(Model model, @PathVariable("id") Long jobId) {
-		//try to find job in DB
+		// try to find job in DB
 		JobDTO job = new JobDTO();
 		UserDTO user = new UserDTO();
 		try {
-		job = jobServices.findById(jobId);
-		model.addAttribute("job", job);
-		}catch(Exception e) {
+			job = jobServices.findById(jobId);
+			model.addAttribute("job", job);
+		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
-		
-		//try to find all the photos related to the job in the DB
+
+		// try to find all the photos related to the job in the DB
 		try {
 			List<PhotoDTO> photos = photoServices.findByJob(job);
 			if (!photos.isEmpty())
@@ -175,7 +201,7 @@ public class JobController {
 			e.getLocalizedMessage();
 		}
 
-		//try to find user that posted the job
+		// try to find user that posted the job
 		try {
 			user = userServices.findById(job.getUser().getUserId());
 			model.addAttribute("user", user);
@@ -183,7 +209,7 @@ public class JobController {
 			e.getLocalizedMessage();
 		}
 
-		//try to find all the related reviews
+		// try to find all the related reviews
 		try {
 			List<ReviewDTO> reviewList = reviewServices.findByJobId(jobId);
 			model.addAttribute("reviewList", reviewList);

@@ -30,6 +30,14 @@ public class CartController {
 	@Autowired
 	CartServices cartServices;
 
+	/**
+	 * Allows the user to add a job to their cart. Will capture the data from the session cart search the database for the users cart and added the selected job.
+	 * @param model the model used to added the objects to 
+	 * @param jobId the jobId captured from the PathVariable and retrieved from the database
+	 * @param userCart the cart captured from the users session
+	 * @param session the HttpSession that contains all the data needed for the user durring thier session
+	 * @return
+	 */
 	@PostMapping("/{jobId}/addToCart")
 	public String addJobToOrder(Model model, @PathVariable("jobId") Long jobId,
 			@Valid @ModelAttribute("userCart") CartDTO userCart, HttpSession session) {

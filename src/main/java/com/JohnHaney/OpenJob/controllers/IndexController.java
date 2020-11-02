@@ -46,9 +46,9 @@ public class IndexController {
 	CartServices cartServices;
 
 	/**
-	 * 
-	 * @param session
-	 * @return
+	 * The initial handler method. Will redirect users to index page and generate dynamic session data for user cart and session
+	 * @param session contains the dynamic objects that specific to the users session
+	 * @return the index view
 	 */
 	@RequestMapping("/")
 	public String showHomePage(HttpSession session, Model jobPostModel) {
@@ -85,7 +85,7 @@ public class IndexController {
 	}
 
 	/**
-	 * stand alone method for uploading images
+	 * stand alone method for uploading images 
 	 * 
 	 * @param imageFile the MultipartFile that contains the image(s) data
 	 * @return will return the URL of the home page
@@ -106,6 +106,13 @@ public class IndexController {
 		return returnValue;
 	}
 
+	/**
+	 * TODO finish pagination
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/page/{pageNumber}/{pageSize}")
 	public String findPagination(@PathVariable(value = "pageNumber") int pageNumber,
 			@PathVariable(value = "pageSize") int pageSize, Model model) {

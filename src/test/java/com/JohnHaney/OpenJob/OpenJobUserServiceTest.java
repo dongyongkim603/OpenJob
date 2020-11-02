@@ -3,6 +3,11 @@ package com.JohnHaney.OpenJob;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -12,20 +17,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.JohnHaney.OpenJob.controllers.UserController;
 import com.JohnHaney.OpenJob.models.UserDTO;
+import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 import com.JohnHaney.OpenJob.services.MyUserDetailServices;
 import com.JohnHaney.OpenJob.services.UserServices;
 
 @SpringBootTest
-class OpenJobApplicationTests {
+class OpenJobUserServiceTest {
 	
 	@Autowired
 	UserServices userService;
-	
-	@Autowired
-	MyUserDetailServices userDetailService;
-	
-	@Autowired
-	UserController uc;
 
 	@Test
 	void existsByUsernameTest() {
@@ -44,11 +44,20 @@ class OpenJobApplicationTests {
 		user.setEmail("set@email.com");
 		user.setPassword("password");
 		user.setRole("ROLE_FREELANCER");
+		String test;
 		try
 		{
 			userService.save(user);
+			test = "is not null";
 		}catch(Exception e) {
-			assertNull(e);
+			test = null;
 		}
+		assertNull(test);
 	}
+	
+	@Test
+	void findAllUsers() {
+		
+	}
+	
 }

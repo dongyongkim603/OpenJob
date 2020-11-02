@@ -49,7 +49,4 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 			userRepo.save(user);
 		}
 		
-//		public User getByUsername() {
-//			
-//		}	
 }

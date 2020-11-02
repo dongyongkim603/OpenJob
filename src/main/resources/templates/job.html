@@ -185,6 +185,7 @@
 							th:if="${session.currentUser != null and session.currentUser.userId != user.userId}">
 							<form th:action="@{/{jobId}/addToCart(jobId=${job.jobId})}"
 								method="post">
+								<h6 class="mt-4 mb-3">Place an order</h6>
 								<input type="submit" class="btn btn-sm btn-primary"
 									id="button-color"> </input>
 							</form>
