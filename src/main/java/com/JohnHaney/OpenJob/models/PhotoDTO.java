@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="photos")
-public class Photo {
+public class PhotoDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +23,11 @@ public class Photo {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="userId")
-	private User user;
+	private UserDTO user;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="jobId")
-	private Job job;
+	private JobDTO job;
 	
 //----------getters and setters------------------
 	
@@ -61,16 +61,16 @@ public class Photo {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
-	public Job getJob() {
+	public JobDTO getJob() {
 		return job;
 	}
-	public void setJob(Job job) {
+	public void setJob(JobDTO job) {
 		this.job = job;
 	}
 }

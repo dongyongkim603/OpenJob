@@ -2,8 +2,8 @@ package com.JohnHaney.OpenJob.DAO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.JohnHaney.OpenJob.models.Order;
+import com.JohnHaney.OpenJob.models.OrderDTO;
 
-public interface OrderRepoIF extends JpaRepository<Order, Integer> {
+public interface OrderRepoIF extends JpaRepository<OrderDTO, Integer> {
 
 }

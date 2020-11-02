@@ -23,8 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.JohnHaney.OpenJob.LoadDictionaries;
 import com.JohnHaney.OpenJob.DAO.UserRepoIF;
-import com.JohnHaney.OpenJob.models.Photo;
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.PhotoDTO;
+import com.JohnHaney.OpenJob.models.UserDTO;
 import com.JohnHaney.OpenJob.security.SecurityUtils;
 import com.JohnHaney.OpenJob.services.PhotoServices;
 import com.JohnHaney.OpenJob.services.UserServices;
@@ -44,18 +44,10 @@ public class UserController {
 	@GetMapping("/register")
 	public String adduser(Model modelUsers, Model modelContires) {
 		// object of Users
-		User newUser = new User();
+		UserDTO newUser = new UserDTO();
 		ArrayList<String> countries = new ArrayList<>();
 		countries = LoadDictionaries.initiateDicationary();
 		modelContires.addAttribute("countries", countries);
-
-//		System.out.println("test");
-//		for(String c: countries)
-//			if(countries.isEmpty())
-//				System.out.println("array is empty");
-//			else 
-//			System.out.println(c);
-		// container for new user
 
 		modelUsers.addAttribute("newUser", newUser);
 
@@ -64,7 +56,7 @@ public class UserController {
 
 	@GetMapping("/register/edit/{id}")
 	public String editProfile(Model model, @PathVariable("id") Long userId) {
-		User editUser = userService.findById(userId);
+		UserDTO editUser = userService.findById(userId);
 		System.out.println(editUser.toString());
 		ArrayList<String> countries = new ArrayList<>();
 		countries = LoadDictionaries.initiateDicationary();
@@ -76,12 +68,12 @@ public class UserController {
 	@GetMapping("/deleteProfile/{id}")
 	public String deleteProfile(Model model, @PathVariable("id") Long userId, HttpSession session) {
 		System.out.println("deleting user...");
-		User user = userService.findById(userId);
+		UserDTO user = userService.findById(userId);
 		
 		//try to delete all photos related to User
 		try {
-			List<Photo> photo = photoServices.findByUser(user);
-			for (Photo p : photo) {
+			List<PhotoDTO> photo = photoServices.findByUser(user);
+			for (PhotoDTO p : photo) {
 				photoServices.deleteById(p.getPhotoId());
 			}
 		} catch (Exception e) {
@@ -98,42 +90,41 @@ public class UserController {
 	}
 
 	@PostMapping("/registerUser")
-	public ModelAndView saveUser(@Valid @ModelAttribute("newUser") User newUser,
+	public ModelAndView saveUser(@Valid @ModelAttribute("newUser") UserDTO newUser,
 			@RequestParam("imageFile") MultipartFile imageFile, BindingResult bind) {
 		ModelAndView modelAndView = new ModelAndView();
 		// newUser.toString();
 		try {
-			if (!userService.existsByUsername(newUser.getUsername())) {
 				userService.save(newUser);
-			} else {
-				// modelAndView.; TODO add error messages
-				// modelAndView.setViewName("register");
-				System.out.println("User already exists");
-			}
+				modelAndView.setViewName("redirect:/login");
 		} catch (Exception e) {
 			e.printStackTrace();
-			modelAndView.setViewName("error");
-		}
-
+			modelAndView.setViewName("register");
+			String errorMessage = "The email or username is already in use";
+			modelAndView.addObject("errorMessage", errorMessage);
+			ArrayList<String> countries = new ArrayList<>();
+			countries = LoadDictionaries.initiateDicationary();
+			modelAndView.addObject("countries", countries);
+		} 
 		if (!imageFile.isEmpty()) {
 			// create new photo from uploaded MultipartFile
-			Photo photo = new Photo();
+			PhotoDTO photo = new PhotoDTO();
 			String fileName = imageFile.getOriginalFilename();
 			photo.setFileName(fileName);
 			photo.setPath("/photos/");// this line will override photos with same name change this hard coded line to
 										// be dynamic
 			photo.setUser(newUser);
-
+			modelAndView.setViewName("redirect:/login");
 			modelAndView.addObject("profilePicture", photo);
 			try {
 				photoServices.saveImage(imageFile, photo);
 			} catch (Exception e) {
 				e.printStackTrace();
-				modelAndView.setViewName("error");
+				modelAndView.setViewName("register");
 				return modelAndView;
 			}
 		}
-		modelAndView.setViewName("redirect:/login");
+		
 		modelAndView.addObject("newUser", newUser);
 		return modelAndView;
 	}
@@ -149,15 +140,15 @@ public class UserController {
 
 		modelAndView.setViewName("profile");
 
-		User activeUser = userRepo.findById(userId).get();
+		UserDTO activeUser = userRepo.findById(userId).get();
 
 		modelAndView.addObject("user", activeUser);
 
-		ArrayList<Photo> photos = (ArrayList<Photo>) photoServices.findAll();
+		ArrayList<PhotoDTO> photos = (ArrayList<PhotoDTO>) photoServices.findAll();
 		for (int i = 0; i < photos.size(); i++) {
 			try {
 				if (photos.get(i).getUser().getUserId() == userId) {
-					Photo profilePicture = photos.get(i);
+					PhotoDTO profilePicture = photos.get(i);
 					modelAndView.addObject("profilePicture", profilePicture);
 					return modelAndView;
 				}
@@ -176,7 +167,7 @@ public class UserController {
 	 */
 	@GetMapping("/editProfile")
 	public ModelAndView getEditUserProfile(ModelAndView session) {
-		User currentUser = userService.findByUsername(SecurityUtils.getUser());
+		UserDTO currentUser = userService.findByUsername(SecurityUtils.getUser());
 		session.addObject("currentUser", currentUser);
 		session.setViewName("user/editProfile");
 		return session;

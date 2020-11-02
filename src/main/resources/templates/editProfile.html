@@ -23,16 +23,7 @@
 		<div id="form">
 			<article class="card-body mx-auto" style="max-width: 400px;">
 				<div id="feedback"></div>
-				<h4 class="card-title mt-3 text-center">Create Account</h4>
-				<p class="text-center">Get started with your free account</p>
-				<p>
-					<a href="Login.html"><img
-						src="/images/icons8-facebook-50.png" /> <i
-						class="fab fa-facebook-f"></i> &nbsp; Login via facebook</a>
-				</p>
-				<p class="divider-text">
-					<span class="bg-light">OR</span>
-				</p>
+				<h4 class="card-title mt-3 text-center">Update Profile Details</h4>
 
 				<form th:action="@{/registerUser}" method="post" th:object="${newUser}"
 					enctype="multipart/form-data">

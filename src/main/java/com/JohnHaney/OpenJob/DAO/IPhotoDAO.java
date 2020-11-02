@@ -2,12 +2,12 @@ package com.JohnHaney.OpenJob.DAO;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.JohnHaney.OpenJob.models.Photo;
+import com.JohnHaney.OpenJob.models.PhotoDTO;
 
 public interface IPhotoDAO {
 
-	void savePhotoImage(Photo photo, MultipartFile imageFile) throws Exception;
+	void savePhotoImage(PhotoDTO photo, MultipartFile imageFile) throws Exception;
 
-	void save(Photo photo);
+	void save(PhotoDTO photo);
 
 }

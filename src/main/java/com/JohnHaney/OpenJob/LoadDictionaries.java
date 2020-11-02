@@ -28,7 +28,7 @@ public class LoadDictionaries {
 			System.out.println("Loading dictionary to memory...");
 			String word = "";
 			while ((word = bufferedReader.readLine()) != null) {
-				System.out.println(word);
+				//System.out.println(word);
 				countries.add(word);
 			}
 		} catch (FileNotFoundException e) {

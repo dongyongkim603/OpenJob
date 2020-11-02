@@ -4,7 +4,7 @@
 		<div class="card mb-4 box-shadow">
 			<!--carousel-->
 
-
+			<!-- carousel controls -->
 			<div id="slides1" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
 					<li data-target="#slides1" data-slide-to="0" class="active"></li>
@@ -43,7 +43,7 @@
 				<!-- jobDescription -->
 				<tr class="card-text">
 					<h3>
-						<td th:text="${j.jobName}"></td>
+						<a th:href="@{/job/{id}(id=${j.jobId})}"><td th:text="${j.jobName}"></td></a>
 					</h3>
 				</tr>
 				<br />

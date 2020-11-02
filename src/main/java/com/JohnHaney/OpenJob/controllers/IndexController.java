@@ -1,35 +1,28 @@
 package com.JohnHaney.OpenJob.controllers;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.JohnHaney.OpenJob.DAO.PhotoRepoIF;
 import com.JohnHaney.OpenJob.DAO.UserRepoIF;
-import com.JohnHaney.OpenJob.models.Job;
-import com.JohnHaney.OpenJob.models.Photo;
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.CartDTO;
+import com.JohnHaney.OpenJob.models.JobDTO;
+import com.JohnHaney.OpenJob.models.PhotoDTO;
+import com.JohnHaney.OpenJob.models.UserDTO;
 import com.JohnHaney.OpenJob.security.SecurityUtils;
+import com.JohnHaney.OpenJob.services.CartServices;
 import com.JohnHaney.OpenJob.services.JobServices;
 import com.JohnHaney.OpenJob.services.PhotoServices;
 import com.JohnHaney.OpenJob.services.UserServices;
@@ -41,16 +34,16 @@ public class IndexController {
 	private UserRepoIF userRepo;
 
 	@Autowired
-	private PhotoRepoIF photoRepo;
-
-	@Autowired
 	JobServices jobServices;
 
 	@Autowired
 	PhotoServices photoServices;
-	
+
 	@Autowired
 	UserServices userServices;
+
+	@Autowired
+	CartServices cartServices;
 
 	/**
 	 * 
@@ -59,16 +52,31 @@ public class IndexController {
 	 */
 	@RequestMapping("/")
 	public String showHomePage(HttpSession session, Model jobPostModel) {
+		UserDTO user = new UserDTO();
+		CartDTO cart = new CartDTO();
+		boolean signedIn = false;
 		try {
-			User user = userRepo.findByUsername(SecurityUtils.getUser()).get();
-			if (user.getEmail() != null)
+			user = userRepo.findByUsername(SecurityUtils.getUser()).get();
+			if (user.getEmail() != null) {
 				session.setAttribute("currentUser", user);
+				signedIn = true;
+			}
 		} catch (NoSuchElementException e) {
 			e.getMessage();
 		}
-		List<Job> jobList = jobServices.findAll();
+
+		if (signedIn) {
+			try {
+				cart = cartServices.findById(user.getCart().getCartId());
+				session.setAttribute("cart", cart);
+			} catch (Exception e) {
+				e.getLocalizedMessage();
+			}
+		}
+
+		List<JobDTO> jobList = jobServices.findAll();
 //		List<Photo> photos = photoServices.findByJob(jobList.get(0));
-		List<Photo> photos = photoServices.findAll();
+		List<PhotoDTO> photos = photoServices.findAll();
 		jobPostModel.addAttribute("jobList", jobList);
 		jobPostModel.addAttribute("photos", photos);
 		System.out.println("there are " + jobList.size() + " jobs");
@@ -86,7 +94,7 @@ public class IndexController {
 	public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile) {
 		String returnValue = "/";
 
-		Photo photo = new Photo();
+		PhotoDTO photo = new PhotoDTO();
 		photo.setFileName(imageFile.getOriginalFilename());
 		photo.setPath("/photos/");
 		try {
@@ -101,8 +109,8 @@ public class IndexController {
 	@GetMapping("/page/{pageNumber}/{pageSize}")
 	public String findPagination(@PathVariable(value = "pageNumber") int pageNumber,
 			@PathVariable(value = "pageSize") int pageSize, Model model) {
-		Page<Job> page = jobServices.findPaginated(pageNumber, pageSize);
-		List<Job> jobList = page.getContent();
+		Page<JobDTO> page = jobServices.findPaginated(pageNumber, pageSize);
+		List<JobDTO> jobList = page.getContent();
 
 		model.addAttribute("currentPage", pageNumber);
 		model.addAttribute("totalPages", page.getTotalPages());

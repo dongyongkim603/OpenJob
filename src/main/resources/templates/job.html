@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>OddJobs</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<link rel="icon" th:href="@{/images/logo.png}">
+</head>
+
+<body>
+
+	<!--navbar-->
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+	<!--end of navbar-->
+
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<div class="row" style="text-align: center;">
+				<h1 th:text="${job.jobName}" style="margin: auto;"></h1>
+				<!-- carousel controls -->
+				<div id="slides1" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#slides1" data-slide-to="0" class="active"></li>
+						<li data-target="#slides1" data-slide-to="1"></li>
+						<li data-target="#slides1" data-slide-to="2"></li>
+					</ol>
+
+					<!-- images -->
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img class="d-block w-100" th:src="@{${'/photos/rose.png'}}"
+								alt="First slide">
+						</div>
+				
+					<span th:if="${photos != null}">
+						<span th:each="photo: ${photos}">
+							<tr th:if="${photo.job == job}">
+								<div class="carousel-item">
+									<img class="d-block w-100"
+										th:src="@{${'/photos/' + photo.fileName}}" alt="Second slide">
+								</div>
+							</tr>
+						</span>
+					</span>
+					</div>
+					<!-- end of images -->
+
+					<a class="carousel-control-prev" href="#slides1" role="button"
+						data-slide="prev"> <span class="carousel-control-prev-icon"
+						aria-hidden="true"></span> <span class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#slides1" role="button"
+						data-slide="next"> <span class="carousel-control-next-icon"
+						aria-hidden="true"></span> <span class="sr-only">Next</span>
+					</a>
+				</div>
+				<!--end of carousel-->
+
+				<!-- delete job button -->
+				<hr />
+				<span th:if="${session.currentUser != null and session.currentUser.username == job.user.username}"> 
+				<a class="btn btn-primary btn-sm" th:href="@{/deleteJob/{jobId}(jobId=${job.jobId})}" method="delete">Delete Job</a>
+				</span>
+				<hr />
+				<!-- end of delete job button -->
+
+				<!-- Information card -->
+				<div class="card">
+					<div class="row no-gutters row-bordered">
+						<div class="d-flex col-md align-items-center">
+							<a href="javascript:void(0)" class="card-body d-block text-body">
+
+								<!-- dynamic job rating -->
+								<div class="text-muted small line-height-1">Average
+									Rating:</div>
+								<div class="text-xlarge" th:if="${reviewList != null}">
+									<p th:text="${rating}"></p>
+								</div>
+								<div class="text-xlarge" th:unless="${reviewList != null}">
+									<p>no ratings yet</p>
+								</div>
+
+							</a>
+						</div>
+					</div>
+					<hr class="border-light m-0">
+					<div class="card-body">
+
+						<table class="table user-view-table m-0">
+							<tbody>
+								<tr>
+									<p>Job posted by:</p>
+									<a
+										th:href="@{/profile/{userProfileID}(userProfileID = ${job.user.userId})}">
+										<p th:text="${user.username}"></p>
+									</a>
+									<button type="button" class="btn btn-sm btn-primary"
+										id="button-color">
+										<a th:href="@{/contactForm/{userID}(userID = ${user.userId})}"
+											style="padding: 1rem; margin: 1rem;">Message</a> <br />
+									</button>
+								</tr>
+								<tr>
+									<td>Date posted:</td>
+									<td th:text="${job.creationDate}"></td>
+								</tr>
+								<tr>
+									<td>Name:</td>
+									<td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
+								</tr>
+								<tr>
+									<td>E-mail:</td>
+									<td th:text="${user.email}"></td>
+								</tr>
+								<tr>
+									<td>Company:</td>
+									<td>Company Ltd.</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h6 class="mt-4 mb-3">Social links</h6>
+
+						<table class="table user-view-table m-0">
+							<tbody>
+								<tr>
+									<td>Twitter:</td>
+									<td><a href="javascript:void(0)">https://twitter.com/user</a></td>
+								</tr>
+								<tr>
+									<td>Facebook:</td>
+									<td><a href="javascript:void(0)">https://www.facebook.com/user</a></td>
+								</tr>
+								<tr>
+									<td>Instagram:</td>
+									<td><a href="javascript:void(0)">https://www.instagram.com/user</a></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h6 class="mt-4 mb-3">Personal info</h6>
+
+						<table class="table user-view-table m-0">
+							<tbody>
+								<tr>
+									<td>Country:</td>
+									<td th:text="${user.country}"></td>
+								</tr>
+								<tr>
+									<td>City:</td>
+									<td th:text="${user.city}"></td>
+								</tr>
+								<tr>
+									<td>Languages:</td>
+									<td>English</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h6 class="mt-4 mb-3">Contacts</h6>
+
+						<table class="table user-view-table m-0">
+							<tbody>
+								<tr>
+									<td>Phone:</td>
+									<td th:text="${user.phoneNumber}"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h6 class="mt-4 mb-3">Skills</h6>
+
+						<table class="table user-view-table m-0">
+							<tbody>
+								<tr>
+									<td></td>
+								</tr>
+							</tbody>
+
+						</table>
+						<span
+							th:if="${session.currentUser != null and session.currentUser.userId != user.userId}">
+							<form th:action="@{/{jobId}/addToCart(jobId=${job.jobId})}"
+								method="post">
+								<input type="submit" class="btn btn-sm btn-primary"
+									id="button-color"> </input>
+							</form>
+						</span> <span th:if="${session.currentUser == null}">
+							<h5>Must have an account to place an order</h5> <a
+							th:href="@{/register}"><button type="button"
+									class="btn btn-sm btn-primary" id="button-color">Register
+								</button></a>
+						</span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- review GET section -->
+	<div class="album py-5 bg-light"
+		style="padding: 2rem; text-align: center;"
+		th:if="${reviewList != null}">
+		<h1>User Reviews:</h1>
+		<div class="card" th:each="r: ${reviewList}">
+
+			<!-- delete review -->
+			<span
+				th:if="${session.currentUser != null and session.currentUser.username == r.sender.username}">
+				<a
+				th:href="@{/deleteReview/{reviewId}/{jobId}(reviewId=${r.reviewId}, jobId=${job.jobId})}"
+				class="btn btn-primary btn-sm" method="delete">Delete Review</a>
+			</span>
+			<!-- end of delete review -->
+
+			<table class="table user-view-table m-0">
+				<tbody>
+					<tr>
+						<p>From:</p>
+						<a
+							th:href="@{/profile/{userProfileID}(userProfileID = ${r.sender.userId})}">
+							<p th:text="${r.sender.username}"></p>
+						</a>
+					</tr>
+					<tr>
+						<td>Rating:</td>
+						<td th:text="${r.rating}"></td>
+					</tr>
+					<tr>
+						<td>Review body:</td>
+						<td th:text="${r.reviewBody}"></td>
+					</tr>
+					<tr>
+						<td>Date posted:</td>
+						<td th:text="${r.creationDate}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- end of review GET section -->
+
+	<!-- conditional if user is singed in -->
+	<div class="album py-5 bg-light"
+		style="padding: 2rem; text-align: center"
+		th:if="${session.currentUser != null and session.currentUser.userId != user.userId}">
+		<h1>How did we do?</h1>
+		<!-- review POST section -->
+		<form style="padding: 2rem; text-align: center;"
+			th:action="@{/{jobId}/jobReview(jobId=${job.jobId})}" method="post">
+			<br />
+			<textarea rows="4" cols="50" id="login"
+				placeholder="Write review here..." th:field="${review.reviewBody}"
+				required></textarea>
+			<br /> <input class="form-control" type="number" id="rating"
+				placeholder="rating 1 - 5" th:field="${review.rating}" min="1"
+				max="5" size="10" style="width: 5rem; margin: auto;" required>
+			<input type="submit" value="Post review">
+		</form>
+	</div>
+
+	<!-- conditional if user is not signed in -->
+	<div class="album py-5 bg-light"
+		th:if="${session.currentUser == null }">
+		<div class="card">
+			<h5>Must have an account to write a review</h5>
+			<a th:href="@{/register}"><button type="button"
+					class="btn btn-sm btn-primary" id="button-color">Register
+				</button></a>
+		</div>
+	</div>
+	<!-- end of review POST section -->
+
+	<!--footer-->
+
+	<!--/*/ <th:block th:include="fragments/footer :: foot"></th:block> /*/-->
+
+	<!--end of navbar-->
+</body>
+
+</html>

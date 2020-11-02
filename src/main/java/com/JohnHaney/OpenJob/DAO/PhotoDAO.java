@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.JohnHaney.OpenJob.models.Photo;
+import com.JohnHaney.OpenJob.models.PhotoDTO;
 
 @Component
 public class PhotoDAO implements IPhotoDAO {
@@ -17,12 +17,12 @@ public class PhotoDAO implements IPhotoDAO {
 	private PhotoRepoIF photoRepo;
 
 	@Override
-	public void save(Photo photo) {
+	public void save(PhotoDTO photo) {
 		photoRepo.save(photo);
 	}
 
 	@Override
-	public void savePhotoImage(Photo photo, MultipartFile imageFile) throws Exception {
+	public void savePhotoImage(PhotoDTO photo, MultipartFile imageFile) throws Exception {
 		// this gets us to src/main/resources without knowing the full path (hardcoding)
 		Path currentPath = Paths.get(".");
 		Path absolutePath = currentPath.toAbsolutePath();

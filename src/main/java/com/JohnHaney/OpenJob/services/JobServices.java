@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.JohnHaney.OpenJob.DAO.JobRepoIF;
-import com.JohnHaney.OpenJob.models.Job;
+import com.JohnHaney.OpenJob.models.JobDTO;
 
 @Service
 public class JobServices implements JobServicesIF {
@@ -29,15 +29,15 @@ public class JobServices implements JobServicesIF {
 			jobRepo.deleteById(id);
 	}
 	
-	public void save(Job user) {		
+	public void save(JobDTO user) {		
 		jobRepo.save(user);
 	}
 	
-	public List<Job> findAll() {
+	public List<JobDTO> findAll() {
 		return jobRepo.findAll();
 	}
 	
-	public Job findById(Long id) {
+	public JobDTO findById(Long id) {
 		return jobRepo.findById(id).get();
 	}
 	
@@ -46,7 +46,7 @@ public class JobServices implements JobServicesIF {
 	}
 	
 	@Override
-	public Page<Job> findPaginated(int pageNumber, int pageSize){
+	public Page<JobDTO> findPaginated(int pageNumber, int pageSize){
 		Pageable pageable = PageRequest.of(pageNumber -1, pageSize);
 		return jobRepo.findAll(pageable);
 	}

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Skill {
+public class SkillDTO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

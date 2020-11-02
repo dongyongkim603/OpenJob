@@ -23,6 +23,7 @@
 		<div id="form">
 			<article class="card-body mx-auto" style="max-width: 400px;">
 				<div id="feedback"></div>
+				<h3 th:text="${errorMessage}" style="color: red;"></h3>
 				<h4 class="card-title mt-3 text-center">Create Account</h4>
 				<p class="text-center">Get started with your free account</p>
 				<p>
@@ -34,9 +35,9 @@
 					<span class="bg-light">OR</span>
 				</p>
 
-				<form th:action="@{/registerUser}" method="post" th:object="${newUser}"
+				<form th:action="@{/registerUser}" method="post" 
 					enctype="multipart/form-data">
-					<input type="hidden" th:field="${newUser.userId}" />
+					<!--  <input type="hidden" th:field="${newUser.userId}" />-->
 					<div class="form-group input-group" id="validation">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img

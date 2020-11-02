@@ -10,10 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User {
+public class UserDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,24 +34,33 @@ public class User {
 	private String password;
 	private String role;
 	
-	@OneToMany(targetEntity=Job.class, cascade = CascadeType.ALL, mappedBy = "user", fetch=FetchType.LAZY)
-	private List<Job> jobPosts;
+	@OneToMany(targetEntity=JobDTO.class, cascade = CascadeType.ALL, mappedBy = "user", fetch=FetchType.LAZY)
+	private List<JobDTO> jobPosts;
 	
-	@OneToMany(targetEntity = Order.class)
-	private List<Order> orders;
-	@OneToMany(targetEntity = Message.class, cascade = CascadeType.ALL, mappedBy = "sender", fetch=FetchType.LAZY)
-	private List<Message> messages;
-	@OneToMany(targetEntity = Review.class)
-	private List<Review> userReviews;
-	@OneToMany(targetEntity = Review.class)
-	private List<Review> jobReviews;
-	@OneToMany(targetEntity = Skill.class)
-	private List<Skill> skills;
+	@OneToMany(targetEntity = OrderDTO.class, cascade = CascadeType.ALL, mappedBy = "freelancer", fetch=FetchType.LAZY)
+	private List<OrderDTO> orders;
+	
+	@OneToMany(targetEntity = MessageDTO.class, cascade = CascadeType.ALL, mappedBy = "sender", fetch=FetchType.LAZY)
+	private List<MessageDTO> messages;
+	
+	@OneToMany(targetEntity = ReviewDTO.class, cascade = CascadeType.ALL, mappedBy = "sender", fetch=FetchType.LAZY)
+	private List<ReviewDTO> userReviews;
+	
+	@OneToMany(targetEntity = ReviewDTO.class)
+	private List<ReviewDTO> jobReviews;
+	
+	@OneToMany(targetEntity = SkillDTO.class)
+	private List<SkillDTO> skills;
+	
+	@OneToOne
+	private CartDTO cart;
 
-	public User() {
+//----------constructors----------------------
+
+	public UserDTO() {
 	}
 	
-	public User(String firstName, String lastName, @NotNull(message = "Field is required!") String username,
+	public UserDTO(String firstName, String lastName, @NotNull(message = "Field is required!") String username,
 			String phoneNumber, @NotNull(message = "Field is required!") String email,
 			String password, String role) {
 		super();
@@ -63,7 +73,7 @@ public class User {
 		this.role = role;
 	}
 
-	public User(String firstName, String lastName, @NotNull(message = "Field is required!") String username,
+	public UserDTO(String firstName, String lastName, @NotNull(message = "Field is required!") String username,
 			String phoneNumber, String country, String city, @NotNull(message = "Field is required!") String email,
 			String password, String role) {
 		super();
@@ -77,8 +87,16 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
+	
 //---------getters and setters ----------------------	
 
+	public CartDTO getCart() {
+		return cart;
+	}
+
+	public void setCart(CartDTO cart) {
+		this.cart = cart;
+	}
 	public Long getUserId() {
 		return userId;
 	}
@@ -159,51 +177,51 @@ public class User {
 		this.role = role;
 	}
 
-	public List<Job> getJobPosts() {
+	public List<JobDTO> getJobPosts() {
 		return jobPosts;
 	}
 
-	public void setJobPosts(List<Job> jobPosts) {
+	public void setJobPosts(List<JobDTO> jobPosts) {
 		this.jobPosts = jobPosts;
 	}
 
-	public List<Order> getOrders() {
+	public List<OrderDTO> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<OrderDTO> orders) {
 		this.orders = orders;
 	}
 
-	public List<Message> getMessages() {
+	public List<MessageDTO> getMessages() {
 		return messages;
 	}
 
-	public void setMessages(List<Message> messages) {
+	public void setMessages(List<MessageDTO> messages) {
 		this.messages = messages;
 	}
 
-	public List<Review> getUserReviews() {
+	public List<ReviewDTO> getUserReviews() {
 		return userReviews;
 	}
 
-	public void setUserReviews(List<Review> userReviews) {
+	public void setUserReviews(List<ReviewDTO> userReviews) {
 		this.userReviews = userReviews;
 	}
 
-	public List<Review> getJobReviews() {
+	public List<ReviewDTO> getJobReviews() {
 		return jobReviews;
 	}
 
-	public void setJobReviews(List<Review> jobReviews) {
+	public void setJobReviews(List<ReviewDTO> jobReviews) {
 		this.jobReviews = jobReviews;
 	}
 
-	public List<Skill> getSkills() {
+	public List<SkillDTO> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(List<SkillDTO> skills) {
 		this.skills = skills;
 	}
 

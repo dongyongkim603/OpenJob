@@ -1,0 +1,82 @@
+package com.JohnHaney.OpenJob.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
+public class CartDTO {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer cartId;
+	
+	private Double total;
+	
+	@OneToMany(targetEntity = JobDTO.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	private List<JobDTO> jobs = new ArrayList<>();
+	
+	@OneToOne
+	private UserDTO shopper;
+	
+//----------------------- Getters and Setters---------------
+
+	public Integer getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(Integer cartId) {
+		this.cartId = cartId;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public List<JobDTO> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(List<JobDTO> jobs) {
+		this.jobs = jobs;
+	}
+
+	public UserDTO getShopper() {
+		return shopper;
+	}
+
+	public void setShopper(UserDTO shopper) {
+		this.shopper = shopper;
+	}
+	
+//-----------------------------------------------------
+	
+	public void addJobToCart(JobDTO job) {
+		this.jobs.add(job);
+	}
+	
+	public void updateTotal() {
+		Double total =0.0;
+		for(JobDTO j: this.jobs) {
+			total += j.getPrice();
+		}
+		setTotal(total);
+	}
+	
+	public void removeFromCart(JobDTO job) {
+		this.jobs.remove(job);
+	}
+	
+}

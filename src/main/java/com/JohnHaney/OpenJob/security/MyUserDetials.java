@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.UserDTO;
 
 public class MyUserDetials implements UserDetails {
 
@@ -19,7 +19,7 @@ public class MyUserDetials implements UserDetails {
 	private String role;
 	private List<GrantedAuthority> authorized;
 	
-	public MyUserDetials(User user) {
+	public MyUserDetials(UserDTO user) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		this.role = user.getRole();

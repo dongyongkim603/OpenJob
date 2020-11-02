@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.JohnHaney.OpenJob.DAO.IPhotoDAO;
 import com.JohnHaney.OpenJob.DAO.PhotoRepoIF;
-import com.JohnHaney.OpenJob.models.Job;
-import com.JohnHaney.OpenJob.models.Photo;
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.JobDTO;
+import com.JohnHaney.OpenJob.models.PhotoDTO;
+import com.JohnHaney.OpenJob.models.UserDTO;
 
 @Service
 public class PhotoServices {
@@ -21,7 +21,7 @@ public class PhotoServices {
 	@Autowired
 	IPhotoDAO photoDAO;
 	
-	public void saveImage(MultipartFile imageFile, Photo photo) throws Exception{
+	public void saveImage(MultipartFile imageFile, PhotoDTO photo) throws Exception{
 		photoDAO.save(photo);
 		photoDAO.savePhotoImage(photo, imageFile);
 	}
@@ -38,19 +38,19 @@ public class PhotoServices {
 			photoRepo.deleteById(id);
 	}
 	
-	public void save(Photo photo) {		
+	public void save(PhotoDTO photo) {		
 		photoRepo.save(photo);
 	}
 	
-	public List<Photo> findAll() {
+	public List<PhotoDTO> findAll() {
 		return photoRepo.findAll();
 	}
 	
-	public Photo findById(Long id) {
+	public PhotoDTO findById(Long id) {
 		return photoRepo.findById(id).get();
 	}
 	
-	public List<Photo> findByJob(Job job) {
+	public List<PhotoDTO> findByJob(JobDTO job) {
 		return photoRepo.findAllByJob(job).get();
 	}
 	
@@ -58,7 +58,7 @@ public class PhotoServices {
 		return photoRepo.existsById(id);
 	}
 	
-	public List<Photo> findByUser(User user) {
+	public List<PhotoDTO> findByUser(UserDTO user) {
 		return photoRepo.findAllByUser(user).get();
 	}
 }

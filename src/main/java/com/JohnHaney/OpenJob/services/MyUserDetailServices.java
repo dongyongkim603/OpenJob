@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.JohnHaney.OpenJob.DAO.UserRepoIF;
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.UserDTO;
 import com.JohnHaney.OpenJob.security.MyUserDetials;
 
 @Service
@@ -20,7 +20,7 @@ public class MyUserDetailServices implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> u = userRepo.findByUsername(username);
+		Optional<UserDTO> u = userRepo.findByUsername(username);
 		u.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + username));
 		return u.map(MyUserDetials::new).get();
 	}

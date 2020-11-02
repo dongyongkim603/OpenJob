@@ -11,15 +11,15 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class SubCategory {
+public class SubCategoryDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer subCategoryId;
 	@NotNull(message = "Field is required!")
 	private String subCategoryName;
-	@OneToMany(targetEntity = Job.class)
-	private List<Job> jobList;
+	@OneToMany(targetEntity = JobDTO.class)
+	private List<JobDTO> jobList;
 	
 //---------getters and setters ----------------------
 	
@@ -35,10 +35,10 @@ public class SubCategory {
 	public void setSubCategoryName(String subCategoryName) {
 		this.subCategoryName = subCategoryName;
 	}
-	public List<Job> getJobList() {
+	public List<JobDTO> getJobList() {
 		return jobList;
 	}
-	public void setJobList(List<Job> jobList) {
+	public void setJobList(List<JobDTO> jobList) {
 		this.jobList = jobList;
 	}
 }

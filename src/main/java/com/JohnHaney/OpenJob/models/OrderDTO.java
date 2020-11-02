@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,22 +18,26 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "Customer_Order")
-public class Order {
+public class OrderDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
+	
 	private String orderStatus;
-	private String paymentStatus;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date estimatedDelivery;
 	@Basic
 	private LocalDate orderCreationDate;
 	private Double price;
-	@ManyToMany(targetEntity = Job.class)
-	private List<Job> jobId;
+	
+	@OneToOne
+	private JobDTO job;
+	
+	@ManyToOne
+	private UserDTO freelancer;
 
 //---------getters and setters ----------------------	
 
@@ -52,12 +57,20 @@ public class Order {
 		this.orderStatus = orderStatus;
 	}
 
-	public String getPaymentStatus() {
-		return paymentStatus;
+	public JobDTO getJob() {
+		return job;
 	}
 
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
+	public void setJob(JobDTO job) {
+		this.job = job;
+	}
+
+	public UserDTO getFreelancer() {
+		return freelancer;
+	}
+
+	public void setFreelancer(UserDTO freelancer) {
+		this.freelancer = freelancer;
 	}
 
 	public Date getEstimatedDelivery() {
@@ -82,14 +95,6 @@ public class Order {
 
 	public void setOrderCreationDate(LocalDate orderCreationDate) {
 		this.orderCreationDate = orderCreationDate;
-	}
-
-	public List<Job> getJobId() {
-		return jobId;
-	}
-
-	public void setJobId(List<Job> jobId) {
-		this.jobId = jobId;
 	}
 
 }

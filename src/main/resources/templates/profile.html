@@ -22,8 +22,8 @@
 
 		<div class="container bootdey flex-grow-1 container-p-y">
 
-			<div class="media align-items-center py-3 mb-3" style="margin: auto;">
-				<div th:if="${profilePicture != null}">
+			<div class="media align-items-center py-3 mb-3" >
+				<div th:if="${profilePicture != null}" style="text-align: center;">
 					<img class="d-block w-100"
 						th:src="@{${'/photos/' + profilePicture.fileName}}"
 						alt="profile picture">
@@ -34,25 +34,29 @@
 				</div>
 
 			</div>
-			<input id="f02" type="file" placeholder="Add profile picture" /> <label
-				for="f02">Add profile picture</label>
 			<hr />
 
-			<div class="media-body ml-4">
+			<div class="media-body ml-4" >
 				<h4 class="font-weight-bold mb-0">
 					<td th:text="${user.username}"></td> <span
 						class="text-muted font-weight-normal"><td
 						th:text="${user.email}"></td></span>
 				</h4>
-
+				
+				<!-- if the profile does not belong to the session user -->
+				<span th:if="${session.currentUser != null and session.currentUser.userId != user.userId}"></span>
+				<span th:unless="${session.currentUser != null and session.currentUser.userId != user.userId}">
 				<!-- edit profile button -->
 				<a th:href="@{/register/edit/{id}(id=${user.userId})}"
 					class="btn btn-primary btn-sm">Edit</a>&nbsp; 
-					
+					<input id="f02" type="file" placeholder="Add profile picture" /> <label
+				for="f02">Add profile picture</label>
 					<!-- delete profile button -->
 					<a
 					th:href="@{/deleteProfile/{id}(id=${session.currentUser.userId})}"
 					class="btn btn-primary btn-sm" method="delete">Delete profile</a>
+				</span>
+				
 			</div>
 
 

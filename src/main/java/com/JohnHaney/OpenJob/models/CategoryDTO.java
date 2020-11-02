@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Category {
+public class CategoryDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class Category {
 	private String description;
 	@NotNull(message = "Field is required!")
 	private String name;
-	@OneToMany(targetEntity = SubCategory.class)
-	private List<SubCategory> subCategory;
+	@OneToMany(targetEntity = SubCategoryDTO.class)
+	private List<SubCategoryDTO> subCategory;
 
 //---------getters and setters ----------------------
 	
@@ -41,10 +41,10 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<SubCategory> getSubCategory() {
+	public List<SubCategoryDTO> getSubCategory() {
 		return subCategory;
 	}
-	public void setSubCategory(List<SubCategory> subCategory) {
+	public void setSubCategory(List<SubCategoryDTO> subCategory) {
 		this.subCategory = subCategory;
 	}
 		

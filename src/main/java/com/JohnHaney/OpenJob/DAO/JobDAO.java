@@ -3,7 +3,7 @@ package com.JohnHaney.OpenJob.DAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.JohnHaney.OpenJob.models.Job;
+import com.JohnHaney.OpenJob.models.JobDTO;
 
 @Component
 public class JobDAO {
@@ -11,8 +11,8 @@ public class JobDAO {
 	@Autowired
 	JobRepoIF jobRepo;
 	
-	public boolean save(Job job) throws Exception{
-		Job savedJob = jobRepo.save(job);
+	public boolean save(JobDTO job) throws Exception{
+		JobDTO savedJob = jobRepo.save(job);
 		job = savedJob;
 		return false;
 	}

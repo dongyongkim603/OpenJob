@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Job {
+public class JobDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,13 @@ public class Job {
 	
 	//bidirectional
 	@ManyToOne
-	private User user;
+	private UserDTO user;
+	
 	@Basic
 	private LocalDate creationDate;
-	@OneToMany(targetEntity = Review.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	private List<Review> jobReview;
+	
+	@OneToMany(targetEntity = ReviewDTO.class, fetch = FetchType.LAZY, mappedBy = "job", cascade = CascadeType.MERGE)
+	private List<ReviewDTO> jobReview;
 	
 //---------getters and setters ----------------------	
 	
@@ -65,17 +67,17 @@ public class Job {
 	public void setCreationDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
 	}
-	public List<Review> getJobReview() {
+	public List<ReviewDTO> getJobReview() {
 		return jobReview;
 	}
-	public void setJobReview(List<Review> jobReview) {
+	public void setJobReview(List<ReviewDTO> jobReview) {
 		this.jobReview = jobReview;
 	}
 	
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
 

@@ -1,7 +1,6 @@
 package com.JohnHaney.OpenJob.controllers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,12 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.JohnHaney.OpenJob.LoadDictionaries;
-import com.JohnHaney.OpenJob.models.Job;
-import com.JohnHaney.OpenJob.models.Photo;
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.CartDTO;
+import com.JohnHaney.OpenJob.models.JobDTO;
+import com.JohnHaney.OpenJob.models.PhotoDTO;
+import com.JohnHaney.OpenJob.models.ReviewDTO;
+import com.JohnHaney.OpenJob.models.UserDTO;
+import com.JohnHaney.OpenJob.services.CartServices;
 import com.JohnHaney.OpenJob.services.JobServices;
 import com.JohnHaney.OpenJob.services.PhotoServices;
+import com.JohnHaney.OpenJob.services.ReviewServices;
+import com.JohnHaney.OpenJob.services.UserServices;
 
 @Controller
 public class JobController {
@@ -35,6 +38,15 @@ public class JobController {
 	@Autowired
 	JobServices jobServices;
 
+	@Autowired
+	UserServices userServices;
+
+	@Autowired
+	ReviewServices reviewServices;
+
+	@Autowired
+	CartServices cartServices;
+
 	/**
 	 * gets the create post new job page passes new job object to model
 	 * 
@@ -43,7 +55,7 @@ public class JobController {
 	 */
 	@GetMapping("/postjob")
 	public String postJob(Model jobModel) {
-		Job newJob = new Job();
+		JobDTO newJob = new JobDTO();
 		jobModel.addAttribute("newJob", newJob);
 		return "postjob";
 	}
@@ -60,11 +72,11 @@ public class JobController {
 	 */
 	@PostMapping("/postNewJob")
 	public ModelAndView postNewJob(@RequestParam("imageFile") MultipartFile imageFile,
-			@Valid @ModelAttribute("newJob") Job newJob, BindingResult bind, HttpSession session) {
+			@Valid @ModelAttribute("newJob") JobDTO newJob, BindingResult bind, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		try {
 			newJob.setCreationDate(LocalDate.now());
-			newJob.setUser((User) session.getAttribute("currentUser"));//
+			newJob.setUser((UserDTO) session.getAttribute("currentUser"));//
 			jobServices.save(newJob);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +85,7 @@ public class JobController {
 
 		if (!imageFile.isEmpty()) {
 			// create new photo from uploaded MultipartFile
-			Photo photo = new Photo();
+			PhotoDTO photo = new PhotoDTO();
 			String fileName = imageFile.getOriginalFilename();
 			photo.setFileName(fileName);
 			photo.setPath("/photos/");// this line will override photos with same name change this hard coded line to
@@ -96,31 +108,96 @@ public class JobController {
 
 	@GetMapping("/postJob/edit/{id}")
 	public String editJob(Model model, @PathVariable("id") Long jobId) {
-		Job editJob = jobServices.findById(jobId);
+		JobDTO editJob = jobServices.findById(jobId);
 		model.addAttribute("newJob", editJob);
 		return "editJob";
 	}
-	
-	@GetMapping("/deleteJob/{id}")
-	public String deleteJob(Model model, @PathVariable("id") Long jobId, HttpSession session) {
+
+	@GetMapping("/deleteJob/{jobId}")
+	public String deleteJob(Model model, @PathVariable("jobId") Long jobId, HttpSession session) {
 		System.out.println("deleting job...");
-		Job job = jobServices.findById(jobId);
-		
-		//try to delete all photos related to job
+		JobDTO job = jobServices.findById(jobId);
+
+		// try to delete all photos related to job
 		try {
-			List<Photo> photo = photoServices.findByJob(job);
-			for (Photo p : photo) {
+			List<PhotoDTO> photo = photoServices.findByJob(job);
+			for (PhotoDTO p : photo) {
 				photoServices.deleteById(p.getPhotoId());
 			}
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		
-		//try to delete all jobs from user
-		
-		
+
+		// update all the carts and remove all instances of the deleted job
+		try {
+			List<CartDTO> cartList = cartServices.findByJob(jobId);
+			for (CartDTO c : cartList) {
+				c.removeFromCart(job);
+				cartServices.save(c);
+			}
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+
+		try {
+			List<ReviewDTO> reviewList = reviewServices.findByJobId(jobId);
+			for (ReviewDTO r : reviewList) {
+				reviewServices.deleteById(r.getReviewId());
+			}
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+
+		// try to delete all jobs from user
 		jobServices.deleteById(jobId);
 		System.out.println("Job was Deleted... ");
 		return "index";
+	}
+
+	@GetMapping("/job/{id}")
+	public String showJobPage(Model model, @PathVariable("id") Long jobId) {
+		//try to find job in DB
+		JobDTO job = new JobDTO();
+		UserDTO user = new UserDTO();
+		try {
+		job = jobServices.findById(jobId);
+		model.addAttribute("job", job);
+		}catch(Exception e) {
+			e.getLocalizedMessage();
+		}
+		
+		//try to find all the photos related to the job in the DB
+		try {
+			List<PhotoDTO> photos = photoServices.findByJob(job);
+			if (!photos.isEmpty())
+				model.addAttribute("photos", photos);
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+
+		//try to find user that posted the job
+		try {
+			user = userServices.findById(job.getUser().getUserId());
+			model.addAttribute("user", user);
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+
+		//try to find all the related reviews
+		try {
+			List<ReviewDTO> reviewList = reviewServices.findByJobId(jobId);
+			model.addAttribute("reviewList", reviewList);
+			float rating = 0;
+			for (ReviewDTO r : reviewList) {
+				rating += r.getRating();
+			}
+			rating = rating / reviewList.size();
+			model.addAttribute("rating", rating);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		ReviewDTO review = new ReviewDTO();
+		model.addAttribute("review", review);
+		return "job";
 	}
 }

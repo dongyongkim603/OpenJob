@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Message {
+public class MessageDTO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class Message {
 	@Basic
 	private LocalDate sentTime;
 	@ManyToOne
-	private User sender;
+	private UserDTO sender;
 	
 //---------getters and setters ----------------------
 	
@@ -43,10 +43,10 @@ public class Message {
 	public void setSentTime(LocalDate sentTime) {
 		this.sentTime = sentTime;
 	}
-	public User getSender() {
+	public UserDTO getSender() {
 		return sender;
 	}
-	public void setSender(User sender) {
+	public void setSender(UserDTO sender) {
 		this.sender = sender;
 	}
 	

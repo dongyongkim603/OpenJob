@@ -5,7 +5,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.JohnHaney.OpenJob.models.User;
+import com.JohnHaney.OpenJob.models.UserDTO;
 
 public final class SecurityUtils {
 
@@ -24,7 +24,7 @@ public final class SecurityUtils {
 		Authentication authentication = securityContext.getAuthentication();
 		String userName = null;
 		if (authentication != null) {
-			User newUser = new User();
+			UserDTO newUser = new UserDTO();
 			try {
 				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 				userName = userDetails.getUsername();
