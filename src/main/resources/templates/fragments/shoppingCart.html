@@ -1,5 +1,5 @@
 
-<div class="container" th:fragment="cart">
+<div class="container" th:fragment="cart" >
 	<table id="cart" class="table table-hover table-condensed" th:if="${session.cart != null}">
 
     				<thead>
@@ -46,7 +46,7 @@
 				</table>
 				</form>
 	<!-- if the user does not have any items in the cart -->			
-				<table id="cart" class="table table-hover table-condensed" th:unless="${session.cart != null}" style="text-align: center; margin: auto;">
+				<table id="cart" class="table table-hover table-condensed" th:unless="${session.cart != null}" style="width: 100%; margin: 0 auto;">
     				<h1>There are no items in your cart</h1>
     				<img src="/images/icons8-sad-100.png" style="margin: auto;">
 				</table>

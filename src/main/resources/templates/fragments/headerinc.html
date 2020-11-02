@@ -16,6 +16,8 @@
 <link th:href="@{/styles/main.css}" rel="stylesheet" type="text/css">
 
 <!-- custom local JavaScript -->
-<script th:src="@{/js/index.js}" defer></script>
-
+<script th:src="@{/js/index.js}" async defer></script>
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB09NP35tQzzqL3plqdOe-IsrwIpCzO8Oo&callback=initMap">
+ </script>
+ <script th:src="@{/js/map.js}"></script>
 </head>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>OddJobs</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<link rel="icon" th:href="@{/images/logo.png}">
+</head>
+
+<body>
+
+	<!--navbar-->
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+	<!--end of navbar-->
+
+	<div class="album py-5 bg-light">
+		<div class="container"
+			style="width: 100%; text-align: center; position: relative;">
+			<!--About section-->
+			<section>
+				<div class="follow_container">
+					<div class="col-md-6 col-md-3" style="width: 100%; margin: 0 auto;">
+						<h1 class="top-title">About Us</h1>
+						<h2 class="white second-title">Our story of a passion for
+							helping other</h2>
+						<button class="accordion">History</button>
+						<div class="panel">
+							<p>generic history and background story here. In 1453 the
+								turkish kingdom united under sulton Ozmond besieged the rump
+								state of the Byzintine empire's capital Constantinople. The
+								emperor Constintine Palaigious sent a request to the kings of
+								western Europe to help in the seige. the only nation to respond
+								were the Venitians sending a mere 2000 men</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- bio navigation Section -->
+			<section class="menus"
+				style="width: 100%; text-align: center; position: relative;">
+				<h2>Get to know</h2>
+				<div class="col-sm-6" style="width: 100%; margin: 0 auto;">
+					<div class="menu-item">
+						<img th:src="@{/images/IMG_3672.jpg}">
+					</div>
+				</div>
+				<div class="card">
+					<h3>Hi, my name is John Haney and...</h3>
+					<div class="panel" style="padding: 1rem;">
+						<p>I am a Full Stack Java Developer who is currently pursuing his masters in applied computer science at Frostburg State University.
+						I am passionate about helping others and teaching others and solving whatever problems I come accross. I also enjoy Hiking, skiing,
+						training martial arts, and traveling when I can. My dream job is to develop applications for either schools or some other educational
+						organization.</p>
+					</div>
+				</div>
+		</div>
+	</div>
+	</section>
+	</div>
+	</div>
+
+	<!--footer-->
+
+	<!--/*/ <th:block th:include="fragments/footer :: foot"></th:block> /*/-->
+
+	<!--end of navbar-->
+</body>
+
+</html>

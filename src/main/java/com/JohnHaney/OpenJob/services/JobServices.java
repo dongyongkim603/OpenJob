@@ -17,11 +17,20 @@ public class JobServices implements JobServicesIF {
 	@Autowired
 	JobRepoIF jobRepo;
 	
+	/**
+	 * Will check to see if a JobDTO of the target name exists in database
+	 * @param name the name of the job to be searched for
+	 * @return true if the job exists
+	 */
 	public boolean existsByName(String name) {
 			if(null == jobRepo.findByJobName(name))
 				return true;
 			else
 				return false;
+	}
+	
+	public List<JobDTO> findAll(String keyword){
+		return jobRepo.findAll(keyword).get();
 	}
 	
 	public void deleteById(Long id) {

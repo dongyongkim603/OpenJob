@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>OddJobs</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<link rel="icon" th:href="@{/images/logo.png}">
+</head>
+
+<body>
+
+	<!--navbar-->
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+	<!--end of navbar-->
+
+<!-- map section -->
+	<div id="map-form">
+		<!-- Tabs Titles -->
+		<div id="map"></div>
+		<!-- Login Form -->
+		<form style="padding-top: 2rem;">
+			<input type="text" id="login" placeholder="Search Location">
+			<input type="submit" class="fadeIn fourth" value="Search">
+		</form>
+	</div>
+<!-- end of map section -->
+
+	<!--footer-->
+
+	<!--/*/ <th:block th:include="fragments/footer :: foot"></th:block> /*/-->
+
+	<!--end of navbar-->
+</body>
+
+</html>

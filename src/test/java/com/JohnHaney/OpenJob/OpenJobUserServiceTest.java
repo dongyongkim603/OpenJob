@@ -3,22 +3,12 @@ package com.JohnHaney.OpenJob;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import com.JohnHaney.OpenJob.controllers.UserController;
 import com.JohnHaney.OpenJob.models.UserDTO;
-import com.JohnHaney.OpenJob.security.WebSecurityConfig;
-import com.JohnHaney.OpenJob.services.MyUserDetailServices;
 import com.JohnHaney.OpenJob.services.UserServices;
 
 @SpringBootTest

@@ -20,10 +20,10 @@
 
 	<div class="album py-5 bg-light">
 
-		<div class="container bootdey flex-grow-1 container-p-y">
+		<div class="container bootdey flex-grow-1 container-p-y" style="width: 100%; text-align: center; position: relative;">
 
-			<div class="media align-items-center py-3 mb-3">
-				<div th:if="${profilePicture != null}" style="text-align: center;">
+			<div class="media align-items-center py-3 mb-3"  style="width: 100%; margin: 0 auto;">
+				<div th:if="${profilePicture != null}" style="width: 35%; margin: 0 auto;">
 					<img class="d-block w-100"
 						th:src="@{${'/photos/' + profilePicture.fileName}}"
 						alt="profile picture">

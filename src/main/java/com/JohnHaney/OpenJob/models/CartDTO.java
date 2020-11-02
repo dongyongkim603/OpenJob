@@ -63,10 +63,17 @@ public class CartDTO {
 	
 //-----------------------------------------------------
 	
+	/**
+	 * adds the job to the list
+	 * @param job the target job
+	 */
 	public void addJobToCart(JobDTO job) {
 		this.jobs.add(job);
 	}
 	
+	/**
+	 * will loop through the list of jobs find the prices and update the CartDTO total attribute 
+	 */
 	public void updateTotal() {
 		Double total =0.0;
 		for(JobDTO j: this.jobs) {
@@ -75,8 +82,13 @@ public class CartDTO {
 		setTotal(total);
 	}
 	
-	public void removeFromCart(JobDTO job) {
-		this.jobs.remove(job);
+	/**
+	 * allows for easier removal of jobs from CartDTO
+	 * @param job the target job to be removed
+	 * @return will return true if job was removed successfully
+	 */
+	public boolean removeFromCart(JobDTO job) {
+		return this.jobs.remove(job);
 	}
 	
 }

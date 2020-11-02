@@ -21,11 +21,22 @@ public class PhotoServices {
 	@Autowired
 	IPhotoDAO photoDAO;
 	
+	/**
+	 * Save the MultipartFile data to a specified directory and save the other photo details to the database
+	 * @param imageFile contains the Byte date of the photo file
+	 * @param photo the PhotoDTO which contains path details and forign key constraints
+	 * @throws Exception 
+	 */
 	public void saveImage(MultipartFile imageFile, PhotoDTO photo) throws Exception{
 		photoDAO.save(photo);
 		photoDAO.savePhotoImage(photo, imageFile);
 	}
 	
+	/**
+	 * will check to see if a photo 
+	 * @param name
+	 * @return
+	 */
 	public boolean existsByName(String name) {
 			if(null == photoRepo.findByFileName(name))
 				return true;

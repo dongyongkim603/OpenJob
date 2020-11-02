@@ -19,6 +19,10 @@ import com.JohnHaney.OpenJob.security.WebSecurityConfig;
 			return userRepo.findAll();
 		}
 		
+		public List<UserDTO> findAll(String keyword){
+			return userRepo.findAll(keyword).get();
+		}
+		
 		public UserDTO findById(Long id) {
 			return userRepo.findById(id).get();
 		}

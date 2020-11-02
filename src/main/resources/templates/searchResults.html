@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="utf-8">
+<title>OddJobs</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+<link rel="icon" th:href="@{/images/logo.png}">
+</head>
+
+<body>
+
+	<!--navbar-->
+	<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+	<!--end of navbar-->
+	
+	<!-- search  result content -->
+	<div class="album py-5 bg-light" style="text-align: center;">
+	<h1>Search results:</h1>
+		<div class="container">
+		<h3>Jobs</h3>
+			<div class="row">
+				
+				<!-- job card fragments -->
+				<!--/*/ <th:block th:include="fragments/itemCard :: item"></th:block> /*/-->
+				<!-- end of card job fragments  -->
+				
+			</div>
+		</div>
+	</div>
+	<!-- end of search result content -->
+	
+	<!-- search  result content -->
+	<div class="album py-5 bg-light" style="text-align: center;">
+		<div class="container">
+		<h3>Profiles</h3>
+			<div class="row">
+				
+				<!-- job card fragments -->
+				<!--/*/ <th:block th:include="fragments/profileCard :: profile"></th:block> /*/-->
+				<!-- end of card job fragments  -->
+				
+			</div>
+		</div>
+	</div>
+	<!-- end of search result content -->
+	
+	<!--footer-->
+
+	<!--/*/ <th:block th:include="fragments/footer :: foot"></th:block> /*/-->
+
+	<!--end of navbar-->
+</body>
+
+</html>
+	

@@ -32,6 +32,11 @@ public class CartServices {
 		return cartRepo.existsById(id);
 	}
 	
+	/**
+	 * Will make a query to find a list of all CartDTO's that match the jobId parameter
+	 * @param job the jobId to be searched for
+	 * @return A list of CartDTO's
+	 */
 	public List<CartDTO> findByJob(Long job){
 		return cartRepo.findByJobsJobId(job).get();
 	}
