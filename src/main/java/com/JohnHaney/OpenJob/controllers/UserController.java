@@ -22,10 +22,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.JohnHaney.OpenJob.LoadDictionaries;
 import com.JohnHaney.OpenJob.DAO.UserRepoIF;
+import com.JohnHaney.OpenJob.models.CartDTO;
+import com.JohnHaney.OpenJob.models.JobDTO;
 import com.JohnHaney.OpenJob.models.PhotoDTO;
+import com.JohnHaney.OpenJob.models.ReviewDTO;
 import com.JohnHaney.OpenJob.models.UserDTO;
 import com.JohnHaney.OpenJob.security.SecurityUtils;
+import com.JohnHaney.OpenJob.services.CartServices;
+import com.JohnHaney.OpenJob.services.JobServices;
 import com.JohnHaney.OpenJob.services.PhotoServices;
+import com.JohnHaney.OpenJob.services.ReviewServices;
 import com.JohnHaney.OpenJob.services.UserServices;
 
 @Controller
@@ -39,6 +45,15 @@ public class UserController {
 
 	@Autowired
 	UserRepoIF userRepo;
+	
+	@Autowired
+	JobServices jobServices;
+	
+	@Autowired
+	ReviewServices reviewServices;
+	
+	@Autowired
+	CartServices cartServices;
 
 	/**
 	 * forwards the user to the registration page and generates new UserDTO to be
@@ -107,10 +122,41 @@ public class UserController {
 		}
 
 		// try to delete all jobs from user
-
-		userService.deleteById(userId);
-		System.out.println("user was Deleted... ");
-		session.removeAttribute("currentUser");
+		try {
+			List<JobDTO> userJobs = jobServices.findByUser(userId);
+			for(JobDTO j: userJobs) {
+				//try to remove all the related reviews
+				try {
+					List<ReviewDTO> reviewList = reviewServices.findByJobId(j.getJobId());
+					for (ReviewDTO r : reviewList) {
+						reviewServices.deleteById(r.getReviewId());
+					}
+				} catch (Exception e) {
+					e.getLocalizedMessage();
+				}
+				//try to update all the users carts
+				try {
+					List<CartDTO> cartList = cartServices.findByJob(j.getJobId());
+					for (CartDTO c : cartList) {
+						cartServices.deleteById(c.getCartId());
+					}
+				} catch (Exception e) {
+					e.getLocalizedMessage();
+				}
+				jobServices.deleteById(j.getJobId());
+			}
+		}catch(Exception e) {
+			e.getLocalizedMessage();
+		}
+		
+		//try to remove the user once all forign key relationships have been removed
+		try {
+			userService.deleteById(userId);
+			System.out.println("user was Deleted... ");
+			session.removeAttribute("currentUser");
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
 		return "index";
 	}
 
@@ -204,8 +250,9 @@ public class UserController {
 	}
 
 	/**
-	 * Finds the current user and creates a UserDTO to be passed to the session. This data will be used by the update handler
-	 * method
+	 * Finds the current user and creates a UserDTO to be passed to the session.
+	 * This data will be used by the update handler method
+	 * 
 	 * @param session stores the current users details
 	 * @return sends the user to the editProfile view page
 	 */
@@ -214,10 +261,10 @@ public class UserController {
 		UserDTO currentUser = new UserDTO();
 		try {
 			currentUser = userService.findByUsername(SecurityUtils.getUser());
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.getLocalizedMessage();
 		}
-		
+
 		session.addObject("currentUser", currentUser);
 		session.setViewName("user/editProfile");
 		return session;

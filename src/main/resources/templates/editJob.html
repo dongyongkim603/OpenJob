@@ -20,11 +20,13 @@
 				<div id="feedback"></div>
 				<h4 class="card-title mt-3 text-center">Edit details of this
 					job</h4>
-
+				<hr />
 				<form th:action="@{/postNewJob}" method="post" th:object="${newJob}"
 					enctype="multipart/form-data">
 					<input type="hidden" th:field="${newJob.jobId}" />
+					
 					<!-- form-group-jobName -->
+					<p>What is the name of the job?:</p>
 					<div class="form-group input-group" id="validation">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
@@ -37,19 +39,22 @@
 					<!-- end-form-group-jobName -->
 
 					<!-- form-group-description// -->
+					<p>Enter description of your services: </p>
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
 								src="/images/icons8-change-user-26.png" /> </span>
 						</div>
 
-						<input class="form-control" id="description"
+						<textarea class="form-control" id="description"
 							placeholder="Description" type="text"
-							th:field="${newJob.jobDescription}" required />
+							th:field="${newJob.jobDescription}" rows="4" cols="50" required>
+							</textarea>
 					</div>
 					<!-- end-form-group-description// -->
 
 					<!-- form-group-price// -->
+					<p>Enter price per hour:</p>
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><img
@@ -57,7 +62,7 @@
 						</div>
 
 						<input class="form-control" id="price" placeholder="Price"
-							type="number" th:field="${newJob.price}" required  min="0"/>
+							type="number" th:field="${newJob.price}" required  min="0" step="0.01"/>
 					</div>
 					<!-- end-form-group-price// -->
 

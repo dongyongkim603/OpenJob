@@ -3,6 +3,9 @@ package com.JohnHaney.OpenJob;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,10 @@ class OpenJobUserServiceTest {
 	@Test
 	void findAllUsers() {
 		
+		String keyword = "dongyongkim";		
+		List<UserDTO> userList = userService.findAll(keyword);
+		assertNotNull(userList);
+		assertEquals(userList.get(0).getUsername(), "dongyongkim");
 	}
 	
 }

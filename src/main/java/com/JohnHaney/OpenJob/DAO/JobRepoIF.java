@@ -11,6 +11,9 @@ import com.JohnHaney.OpenJob.models.JobDTO;
 public interface JobRepoIF extends JpaRepository<JobDTO, Long> {
 	Optional<JobDTO> findByJobName(String name);
 	
+	@Query("SELECT j FROM JobDTO j WHERE j.user LIKE %?1%")
+	Optional<List<JobDTO>> findAll(Long userId);
+	
 	@Query("SELECT j FROM JobDTO j WHERE j.jobName LIKE %?1%"
 			+ "OR j.jobDescription LIKE %?1%")
 	Optional<List<JobDTO>> findAll(String keyword);

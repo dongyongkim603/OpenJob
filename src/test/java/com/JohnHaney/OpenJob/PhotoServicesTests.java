@@ -11,6 +11,4 @@ class PhotoServicesTests {
 	@Autowired
 	PhotoServices photoServices;
 	
-	@Test
-	void 
 }

@@ -48,9 +48,9 @@
 					th:if="${session.currentUser != null and session.currentUser.username == user.username}">
 					<!-- edit profile button --> <a
 					th:href="@{/register/edit/{id}(id=${user.userId})}"
-					class="btn btn-primary btn-sm">Edit</a>&nbsp; <input id="f02"
+					class="btn btn-primary btn-sm">Edit</a>&nbsp; <!-- <input id="f02"
 					type="file" placeholder="Add profile picture" /> <label for="f02">Add
-						profile picture</label> <!-- delete profile button --> <a
+						profile picture</label>  --><!-- delete profile button --> <a
 					th:href="@{/deleteProfile/{id}(id=${session.currentUser.userId})}"
 					class="btn btn-primary btn-sm" method="delete">Delete profile</a>
 				</span>
